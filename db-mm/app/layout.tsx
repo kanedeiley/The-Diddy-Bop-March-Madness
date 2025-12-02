@@ -42,8 +42,8 @@ export default function RootLayout({
           >
             <div style={{ fontWeight: 700 }}>March Madness</div>
             <div style={{ display: "flex", gap: "1rem" }}>
-              <Link href="/">Home</Link>
-              <Link href="/brackets">Brackets</Link>
+              <Link href="/">Brackets</Link>
+              <Link href="/brackets">Scoreboard</Link>
               <Link href="/about">Winners</Link>
             </div>
           </nav>
