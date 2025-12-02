@@ -47,7 +47,6 @@ git pull
 ```bash
 git checkout -b "feature/<feature-name>"
 ```
-- When ready create a pull request `base: main` <- `compare: feature/<feature-name>`
 
 ### Staying up to date with remote main:
 
@@ -56,7 +55,7 @@ git checkout -b "feature/<feature-name>"
 git pull
 ```
 
-### Staying up to date with remote main:
+### Updating the Remote version of your Feature branch:
 
 - pushing changes from your local to remote
 
@@ -69,3 +68,7 @@ git commit -m "<update>"
 ```bash
 git push origin head
 ```
+
+### Making changes to the `main` Branch:
+
+- When ready create a pull request `base: main` <- `compare: feature/<feature-name>`
