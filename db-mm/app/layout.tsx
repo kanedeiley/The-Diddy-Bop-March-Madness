@@ -44,7 +44,7 @@ export default function RootLayout({
             <div style={{ display: "flex", gap: "1rem" }}>
               <Link href="/">Home</Link>
               <Link href="/brackets">Brackets</Link>
-              <Link href="/about">About</Link>
+              <Link href="/about">Winners</Link>
             </div>
           </nav>
         </div>
