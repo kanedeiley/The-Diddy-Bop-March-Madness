@@ -52,7 +52,7 @@ git checkout -b "feature/<feature-name>"
 
 - while in your local feature branch:
 ```bash
-git pull
+git pull origin main
 ```
 
 ### Updating the Remote version of your Feature branch:
