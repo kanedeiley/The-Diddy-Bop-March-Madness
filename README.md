@@ -47,7 +47,7 @@ git pull
 ```bash
 git checkout -b "feature/<feature-name>"
 ```
-- When ready create a pull request `feature/<feature-name>` -> `main`
+- When ready create a pull request `base: main` <- `compare: feature/<feature-name>`
 
 ### Staying up to date with remote main:
 
