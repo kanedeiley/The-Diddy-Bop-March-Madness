@@ -1,7 +1,10 @@
-
+import React from 'react'
+import PodiumWinners from '../features/winners/winnersboard'
 function page() {
   return (
-    <div>page</div>
+    <div>
+      <PodiumWinners />
+    </div>
   )
 }
 
