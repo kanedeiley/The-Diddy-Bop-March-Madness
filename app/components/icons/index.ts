@@ -1,6 +1,7 @@
-import { Check, Cancel } from "./EditIcons";
+import { Check, Cancel, Flag } from "./EditIcons";
 import Cinderella from "./Cinderella";
 
+
 export {
-    Check, Cancel, Cinderella
+    Check, Cancel, Cinderella, Flag
 }

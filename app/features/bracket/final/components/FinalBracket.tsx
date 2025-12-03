@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useBracketContext } from '../../context/useBracketContext';
 import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
 import { team } from '../../types';
+import NationalChampion from './FinalChampion';
 
 type Game = {
   id: string;
@@ -276,21 +277,31 @@ export default function FinalBracket({ position }: FinalFourBracketProps) {
         })}
 
         {/* National Champion Indicator */}
-        {nationalChampion && (
-          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
-            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-6 py-3 rounded-full shadow-lg">
-              <div className="text-xs font-semibold">🏆 NATIONAL CHAMPION 🏆</div>
-              <div className="text-lg font-bold">
-                {nationalChampion.name}
-              </div>
-              {nationalChampion.region && (
-                <div className="text-xs">
-                  {nationalChampion.region} Region
-                </div>
-              )}
-            </div>
+     {nationalChampion && (
+        <>
+          {/* Connector line to champion */}
+          <svg className="absolute inset-0 pointer-events-none" style={{ width: '100%', height: '100%' }}>
+            <path
+            d={`M ${100 + roundGap + gameWidth} ${100 + gameHeight / 2} 
+                L ${650} ${100 + 40}`}
+              stroke="#fbbf24"
+              strokeWidth="3"
+              fill="none"
+            />
+          </svg>
+          
+          <div 
+            className="absolute"
+            style={{
+              left: `650px`,
+              top: `100px`,
+              width: `${gameWidth}px`,
+            }}
+          >
+            <NationalChampion />
           </div>
-        )}
+        </>
+      )}
       </div>
     </div>
   );
