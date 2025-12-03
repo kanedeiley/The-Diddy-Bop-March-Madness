@@ -35,6 +35,14 @@ export type BracketContextType = {
   // Reset functions
   resetRegion: (region: string) => void;
   resetAllBrackets: () => void;
+
+  // Final Four
+  finalFourGames: Game[];
+  nationalChampion: team | null;
+  ensureFinalFourInitialized: () => void;
+  selectFinalFourWinner: (gameId: string, winner: team) => void;
+  areAllRegionsComplete: () => boolean;
+  getRegionWinner: (regionKey: string) => team | null;
 };
 
 export const BracketContext = createContext<BracketContextType | undefined>(

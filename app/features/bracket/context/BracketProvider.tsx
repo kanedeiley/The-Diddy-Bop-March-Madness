@@ -27,6 +27,14 @@ export const BracketProvider = ({ children }: { children: React.ReactNode }) => 
     // Reset functions
     resetRegion,
     resetAllBrackets,
+
+    // Final Four
+    finalFourGames,
+    nationalChampion,
+    ensureFinalFourInitialized,
+    selectFinalFourWinner,
+    areAllRegionsComplete,
+    getRegionWinner,
   } = useBracketHook();
 
   return (
@@ -56,6 +64,14 @@ export const BracketProvider = ({ children }: { children: React.ReactNode }) => 
         // Reset functions
         resetRegion,
         resetAllBrackets,
+
+        // Final Four
+        finalFourGames,
+        nationalChampion,
+        ensureFinalFourInitialized,
+        selectFinalFourWinner,
+        areAllRegionsComplete,
+        getRegionWinner,
       }}
     >
       {children}
