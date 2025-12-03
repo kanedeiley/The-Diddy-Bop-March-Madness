@@ -1,9 +1,10 @@
 'use client';
-
 import { useEffect } from 'react';
 import { useBracketContext } from '../../context/useBracketContext';
 import { team } from '../../types';
+import CinderellaSelector from './CinderellaSelector';
 import { Cinderella } from '@/app/components/icons';
+import RegionChampion from './RegionChampion';
 
 type Game = {
   id: string;
@@ -224,6 +225,9 @@ export default function RegionBracket({ position }: RegionBracketProps) {
                       <span className="text-sm flex-1 truncate">
                         {game.team1.name}
                       </span>
+                      {(selectedCinderella && game.team1 && selectedCinderella.id === game.team1.id && game.winner?.id === game.team1.id) && (
+                        <Cinderella className='h-4 w-4' />
+                      )}
                     </>
                   ) : (
                     <span className="text-sm text-gray-400 italic">TBD</span>
@@ -253,7 +257,9 @@ export default function RegionBracket({ position }: RegionBracketProps) {
                       <span className="text-sm flex-1 truncate">
                         {game.team2.name}
                       </span>
-                      <Cinderella className="h-4 w-4" />
+                      {(selectedCinderella && game.team2 && selectedCinderella.id === game.team2.id && game.winner?.id === game.team2.id) && (
+                        <Cinderella className='h-4 w-4' />
+                      )}
                     </>
                   ) : (
                     <span className="text-sm text-gray-400 italic">TBD</span>
@@ -264,17 +270,43 @@ export default function RegionBracket({ position }: RegionBracketProps) {
           );
         })}
 
-        {/* Region Champion Indicator */}
-        {currentRegionWinner && (
-          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
-            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-6 py-3 rounded-full shadow-lg">
-              <div className="text-xs font-semibold">REGION CHAMPION</div>
-              <div className="text-lg font-bold">
-                {currentRegionWinner.name}
-              </div>
-            </div>
+        <div 
+          className="absolute"
+          style={{
+            left: `100px`,
+            top: `900px`,
+            width: `${gameWidth}px`, 
+          }}
+        >
+          <CinderellaSelector />
+        </div>
+
+
+      {currentRegionWinner && (
+        <>
+          {/* Connector line to champion */}
+          <svg className="absolute inset-0 pointer-events-none" style={{ width: '100%', height: '100%' }}>
+            <path
+              d={`M ${100 + (4 - 1) * roundGap + gameWidth} ${100 + gameHeight / 2} 
+                  L ${1200} ${100 + 40}`}
+              stroke="#fbbf24"
+              strokeWidth="3"
+              fill="none"
+            />
+          </svg>
+          
+          <div 
+            className="absolute"
+            style={{
+              left: `1200px`,
+              top: `100px`,
+              width: `${gameWidth}px`,
+            }}
+          >
+            <RegionChampion />
           </div>
-        )}
+        </>
+      )}
       </div>
     </div>
   );
