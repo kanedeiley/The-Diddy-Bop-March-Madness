@@ -2,18 +2,14 @@
 
 import { useEffect } from 'react';
 import { useBracketContext } from '../../context/useBracketContext';
-
-type Team = {
-  id: string;
-  name: string;
-  seed: number;
-};
+import { team } from '../../types';
+import { Cinderella } from '@/app/components/icons';
 
 type Game = {
   id: string;
-  team1?: Team;
-  team2?: Team;
-  winner?: Team;
+  team1?: team;
+  team2?: team;
+  winner?: team;
   round: number;
   position: number;
 };
@@ -44,7 +40,7 @@ export default function RegionBracket({ position }: RegionBracketProps) {
   const roundGap = 280;
   const verticalGap = 20;
 
-  const selectWinner = (game: Game, team: Team) => {
+  const selectWinner = (game: Game, team: team) => {
     selectWinnerFromContext(selectedRegion, game.id, team);
   };
 
@@ -257,6 +253,7 @@ export default function RegionBracket({ position }: RegionBracketProps) {
                       <span className="text-sm flex-1 truncate">
                         {game.team2.name}
                       </span>
+                      <Cinderella className="h-4 w-4" />
                     </>
                   ) : (
                     <span className="text-sm text-gray-400 italic">TBD</span>

@@ -8,7 +8,7 @@ function Bracket() {
   return (
         <div className="bracket-content">
           {selectedRegion === "final" ? (
-            <FinalBracket />
+            <FinalBracket position="left" />
           ) : (
             <RegionBracket
               position="left"
