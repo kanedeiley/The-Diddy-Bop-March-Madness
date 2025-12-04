@@ -32,6 +32,7 @@ const podiumWinners: PodiumWinner[] = [
         pickedChampion: "Purdue",
         imageUrl: "/images/mike.png",
     },
+
 ];
 
 export default function PodiumWinners() {
