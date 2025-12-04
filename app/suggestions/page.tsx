@@ -139,9 +139,9 @@ export default function Page() {
           }}
           className="p-8"
         >
-        <div className={`fixed top-40 z-40 w-[90vw] left-1/2 -translate-x-1/2 ${isAnimating ? 'animate-form-swap' : ''}`}>
+        <div className={`fixed top-40 right-30 z-40 w-[90vw] left-1/2 -translate-x-1/2 ${isAnimating ? 'animate-form-swap' : ''}`}>
           <div className="p-6">
-            <form onSubmit={handleSubmit} className="w-full">
+            <form onSubmit={handleSubmit} className="max-w-xl">
               <div className="relative">
                 <input
                   type='text'
@@ -167,7 +167,7 @@ export default function Page() {
 
         {isAnimating && (
           <div className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-50 animate-finger-slide">
-            <MiddleFinger className="h-32 w-32 text-indigo-600 animate-finger-tilt" />
+            <MiddleFinger className="h-60 w-60 text-indigo-600 animate-finger-tilt" />
           </div>
         )}
       </div>
