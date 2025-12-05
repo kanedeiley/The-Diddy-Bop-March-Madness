@@ -110,3 +110,123 @@ body {
 }
 
 
+
+
+@keyframes finger-slide {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  33% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  66% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+}
+
+@keyframes finger-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(180deg);
+  }
+  66% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes finger-tilt {
+  /* Coming in from right - leaning left due to rightward momentum */
+  0% {
+    rotate: -15deg;
+  }
+  /* Still moving, tilt increases */
+  15% {
+    rotate: -20deg;
+  }
+  /* Arrives at center - overcorrects right */
+  33% {
+    rotate: 25deg;
+  }
+  /* Waggle back left */
+  36% {
+    rotate: -15deg;
+  }
+  /* Waggle right */
+  39% {
+    rotate: 10deg;
+  }
+  /* Waggle left (smaller) */
+  42% {
+    rotate: -5deg;
+  }
+  /* Settles upright */
+  45% {
+    rotate: 0deg;
+  }
+  /* Stays stable in middle */
+  55% {
+    rotate: 0deg;
+  }
+  /* Starts moving left - begins leaning right */
+  60% {
+    rotate: 10deg;
+  }
+  /* Accelerating left - leans more right */
+  66% {
+    rotate: 20deg;
+  }
+  /* Full speed left - max right lean */
+  85% {
+    rotate: 30deg;
+  }
+  /* Exits */
+  100% {
+    rotate: 25deg;
+  }
+}
+
+@keyframes form-swap {
+  0% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-finger-slide {
+  animation: finger-slide 3s ease-in-out;
+}
+
+.animate-finger-tilt {
+  animation: finger-tilt 3s ease-in-out;
+}
+
+.animate-form-swap {
+  animation: form-swap 3s ease-in-out;
+}
