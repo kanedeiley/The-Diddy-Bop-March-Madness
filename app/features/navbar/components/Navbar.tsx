@@ -1,7 +1,13 @@
-import { Cinderella } from "@/app/components/icons"
+'use client'
+import { usePathname } from "next/navigation"
+import SignOut from "@/app/components/auth/sign-out"
 import Link from "next/link"
-
+import { Logo } from "@/app/components/icons"
 export default function Navbar() {
+  const path = usePathname()
+
+  if (path === "/login" || path === "/profile/create") return null
+
   return (
     <div>
       <nav
@@ -14,11 +20,15 @@ export default function Navbar() {
           background: "white",
         }}
       >
-        <div style={{ fontWeight: 700 }}><Link href="/">March Madness</Link></div>
+        <Link href={'/'}>
+        <Logo className="h-8 stroke-black fill-black text-gray-700" />
+        </Link>
         <div style={{ display: "flex", gap: "1rem" }}>
           <Link href="/brackets">Brackets</Link>
           <Link href="/scoreboard">Scoreboard</Link>
           <Link href="/winners">Winners</Link>
+  
+          <SignOut />
         </div>
 
       </nav>
