@@ -30,9 +30,7 @@ export default async function RootLayout({
   const profile = await getProfile().catch(() => null)
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased pt-20`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar profile={profile} />
           <Toaster />
         {children}
