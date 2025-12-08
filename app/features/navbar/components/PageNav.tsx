@@ -13,9 +13,9 @@ export default function PageNav() {
 
   const navLinks = [
     { href: '/brackets', label: 'Brackets' },
-    { href: '/suggestions', label: 'Suggestions' },
     { href: '/scoreboard', label: 'Scoreboard' },
-    { href: '/winner', label: 'Winner' }
+    { href: '/winner', label: 'Winner' },
+    { href: '/suggestions', label: 'Suggestions' },
   ]
 
   return (
@@ -34,11 +34,11 @@ export default function PageNav() {
       </div>
 
       {/* Mobile Navigation - dropdown menu icon, visible only on small screens */}
-      <div className="md:hidden">
+      <div className="md:hidden flex items-center">
         <Dropdown
           trigger={
             <button 
-              className="text-gray-600 hover:text-gray-900 transition-colors p-2 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded"
+              className="text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-200 rounded flex items-center justify-center"
               aria-label="Navigation menu"
             >
               <svg 
