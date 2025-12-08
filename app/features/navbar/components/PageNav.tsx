@@ -13,9 +13,9 @@ export default function PageNav() {
 
   const navLinks = [
     { href: '/brackets', label: 'Brackets' },
-    { href: '/suggestions', label: 'Suggestions' },
     { href: '/scoreboard', label: 'Scoreboard' },
-    { href: '/winner', label: 'Winner' }
+    { href: '/winners', label: 'Winners' },
+    { href: '/suggestions', label: 'Suggestions' },
   ]
 
   return (
@@ -34,7 +34,7 @@ export default function PageNav() {
       </div>
 
       {/* Mobile Navigation - dropdown menu icon, visible only on small screens */}
-      <div className="md:hidden">
+      <div className="md:hidden flex items-center">
         <Dropdown
           trigger={
             <button

@@ -14,7 +14,7 @@ export default function ProfileHover({ profile }: ProfileHoverProps) {
     <Dropdown
       trigger={
         <button 
-          className="focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-full transition-all"
+          className="focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-full transition-all flex items-center justify-center"
           aria-label="Profile menu"
         >
           <ProfilePhoto profile={profile} />
@@ -25,8 +25,8 @@ export default function ProfileHover({ profile }: ProfileHoverProps) {
     >
       {/* Profile Info Section */}
       <div className="px-4 py-3 border-b border-gray-100">
-        <p className="text-sm font-semibold text-gray-900 truncate">
-          {profile?.username || profile?.email || 'User'}
+        <p className="text-sm font-medium text-gray-900 truncate">
+          {profile?.name || profile?.email || 'User'}
         </p>
         {profile?.email && (
           <p className="text-xs text-gray-500 truncate mt-0.5">
