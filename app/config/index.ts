@@ -9,9 +9,10 @@ export type TournamentConfig = {
 };
 
 // Current tournament configuration
+// Order for regions -  [1,2 ... and ... 3,4] play respectively in final four
 export const CURRENT_TOURNAMENT_CONFIG: TournamentConfig = {
   year: 2025,
-  regions: ['east', 'west', 'south', 'midwest'],
+  regions: ['south', 'east', 'west', 'midwest'],
   finalFourLocation: 'San Antonio, TX',
   championshipLocation: 'San Antonio, TX',
 };

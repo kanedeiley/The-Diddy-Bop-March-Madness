@@ -1,38 +1,38 @@
+// Navbar.tsx
 'use client'
 import { usePathname } from "next/navigation"
 import SignOut from "@/app/components/auth/sign-out"
 import Link from "next/link"
 import { Logo } from "@/app/components/icons"
-export default function Navbar() {
+import ProfilePhoto from "../../profile/components/ProfilePhoto"
+import { Button } from "@/app/components/ui/button"
+
+interface NavbarProps {
+  profile: any // Or your Profile type
+}
+
+export default function Navbar({ profile }: NavbarProps) {
   const path = usePathname()
 
   if (path === "/login" || path === "/profile/create") return null
 
   return (
     <div>
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0.75rem 1rem",
-          borderBottom: "1px solid #eaeaea",
-          background: "white",
-        }}
+      <nav className="flex w-full border-b border-gray-700/20 align-center items-center justify-between h-auto py-4 px-8"
       >
         <Link href={'/'}>
-        <Logo className="h-8 stroke-black fill-black text-gray-700" />
+          <Logo className="h-6 stroke-black fill-black text-gray-700" />
+
         </Link>
-        <div style={{ display: "flex", gap: "1rem" }}>
-          <Link href="/brackets">Brackets</Link>
-          <Link href="/scoreboard">Scoreboard</Link>
-          <Link href="/winners">Winners</Link>
-  
-          <SignOut />
-        </div>
-
+        <div className="flex w-auto gap-6 items-center align-center">
+          <Button className="h-6 w-6" >
+            -
+          </Button>
+          <Link href={'/profile'}>
+          <ProfilePhoto profile={profile} />
+          </Link>
+      </div>
       </nav>
-
     </div>
   )
 }
