@@ -37,21 +37,21 @@ export default function PageNav() {
       <div className="md:hidden">
         <Dropdown
           trigger={
-            <button 
+            <button
               className="text-gray-600 hover:text-gray-900 transition-colors p-2 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded"
               aria-label="Navigation menu"
             >
-              <svg 
-                className="w-5 h-5" 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M4 6h16M4 12h16M4 18h16" 
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
             </button>

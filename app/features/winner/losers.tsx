@@ -1,5 +1,5 @@
 "use client";
-import { Losers as podiumWinners } from '../winners';
+import { Losers as podiumWinners } from '.';
 
 // type Loser = {
 //     name: string;

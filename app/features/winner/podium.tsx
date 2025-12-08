@@ -1,6 +1,6 @@
 // PodiumWinners.tsx
 "use client";
-import { podiumWinners } from '../winners';
+import { podiumWinners } from '.';
 
 // type PodiumWinner = {
 //     name: string;
