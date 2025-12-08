@@ -501,7 +501,7 @@ const midwestTeams: team[] = [
   }
 
   const selectedCinderella = selectedCinderellas[selectedRegion] ?? null
-  const regionCinderellas = regionData[selectedRegion].filter(team => team.seed > 11)
+  const regionCinderellas = regionData[selectedRegion].filter(team => team.seed >= 11)
   const currentRegionGames = regionalGames[selectedRegion] || []
   const currentRegionWinner = regionWinners[selectedRegion]
 

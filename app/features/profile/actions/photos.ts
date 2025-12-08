@@ -29,24 +29,3 @@ export async function getDefaultPhotos() {
 
   return photos
 }
-
-export async function createProfile(data: { username: string; avatar_url: string }) {
-  const supabase = await createClient()
-  
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Not authenticated')
-
-  const { error } = await supabase
-    .from('profile')
-    .insert({
-      user: user.id,
-      username: data.username,
-      avatar_url: data.avatar_url,
-      created_at: new Date().toISOString(),
-    })
-
-  if (error) throw error
-
-  // Don't revalidate here, let client handle it
-  return { success: true }
-}

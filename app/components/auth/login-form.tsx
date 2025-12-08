@@ -4,6 +4,7 @@ import { useState } from "react"
 import { cn } from "@/app/lib/utils"
 import { SignIn } from "./sign-in"
 import { SignUp } from "./sign-up"
+import { Basketball } from "../icons"
 
 export function LoginForm({
   className,
@@ -17,23 +18,7 @@ export function LoginForm({
         <div className="flex flex-col items-center gap-2">
           <a href="#" className="flex flex-col items-center gap-2 font-medium">
             <div className="flex h-8 w-8 items-center justify-center rounded-md">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={32}
-                height={32}
-                viewBox="0 0 24 24"
-                fill="orange"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-basketball animate-bounce"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M2.1 13.4A10.1 10.1 0 0 0 13.4 2.1" />
-                <path d="m5 4.9 14 14.2" />
-                <path d="M21.9 10.6a10.1 10.1 0 0 0-11.3 11.3" />
-              </svg>
+            <Basketball className="h-4 w-4 animate-bounce" />
             </div>
             <span className="sr-only">Diddy Bop March Madness</span>
           </a>

@@ -1,16 +1,20 @@
 "use client"
-
 import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
-import { createProfile } from "../actions/profile"
+import { createProfile, updateProfile } from "../actions/profile"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { DefaultPhotos } from "./DefaultPhotos"
 
-export function CreateProfileForm() {
-  const [formData, setFormData] = useState({ username: "", avatar_url: "" })
+interface profileFormProps {
+    profile: any
+}
+
+
+export function ProfileForm(props: profileFormProps) {
+  const [formData, setFormData] = useState(props.profile)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
@@ -27,17 +31,15 @@ export function CreateProfileForm() {
     setLoading(true)
 
     try {
-      await createProfile({
+      await updateProfile({
         username: formData.username,
         avatar_url: formData.avatar_url,
       })
       
-      toast.success("Profile created!")
-      
-      // Use window.location for a hard refresh to clear all caches
-      window.location.href = '/'
+      toast.success("Profile Updated!")
+          setLoading(false)
     } catch (error: any) {
-      toast.error("Failed to create profile")
+      toast.error("Failed to update profile")
       setLoading(false)
     }
   }
@@ -51,7 +53,7 @@ export function CreateProfileForm() {
             id="username"
             name="username"
             type="text"
-            placeholder="Choose a username"
+            placeholder="Update Username"
             required
             value={formData.username}
             onChange={handleChange}
@@ -71,7 +73,7 @@ export function CreateProfileForm() {
           className="w-full"
           disabled={loading || !formData.avatar_url}
         >
-          {loading ? "Creating..." : "Create Profile"}
+          {loading ? "Loading..." : "Update Profile"}
         </Button>
       </div>
     </form>

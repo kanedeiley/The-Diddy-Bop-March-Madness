@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./features/navbar/components/Navbar";
 import { Toaster } from "sonner";
+import { getProfile } from "./features/profile/actions/profile";
 
 
 const geistSans = Geist({
@@ -20,7 +21,9 @@ export const metadata: Metadata = {
   description: "Curated by the Deiley Twins",
 };
 
-export default function RootLayout({
+const profile = await getProfile()
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -30,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
+        <Navbar profile={profile} />
           <Toaster />
         {children}
       </body>
