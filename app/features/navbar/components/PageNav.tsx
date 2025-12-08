@@ -14,7 +14,7 @@ export default function PageNav() {
   const navLinks = [
     { href: '/brackets', label: 'Brackets' },
     { href: '/scoreboard', label: 'Scoreboard' },
-    { href: '/winner', label: 'Winner' },
+    { href: '/winners', label: 'Winners' },
     { href: '/suggestions', label: 'Suggestions' },
   ]
 
