@@ -20,14 +20,14 @@ export const metadata: Metadata = {
   title: "DBOP March Madness",
   description: "Curated by the Deiley Twins",
 };
-
-const profile = await getProfile()
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch profile inside the server component so request-scoped
+  // APIs like `cookies()` are called within a request context.
+  const profile = await getProfile().catch(() => null)
   return (
     <html lang="en">
       <body
