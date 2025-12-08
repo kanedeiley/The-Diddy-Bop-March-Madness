@@ -1,39 +1,40 @@
 // PodiumWinners.tsx
 "use client";
+import { podiumWinners } from '../winners';
 
-type PodiumWinner = {
-    name: string;
-    place: 1 | 2 | 3;
-    wins: number;
-    pickedChampion: string;
-    imageUrl: string;
-};
+// type PodiumWinner = {
+//     name: string;
+//     place: 1 | 2 | 3;
+//     wins: number;
+//     pickedChampion: string;
+//     imageUrl: string;
+// };
 
-// Hardcoded for now – replace with DB data later
-const podiumWinners: PodiumWinner[] = [
-    {
-        place: 2,
-        name: "Sarah",
-        wins: 1,
-        pickedChampion: "Houston",
-        imageUrl: "/images/sarah.png",
-    },
-    {
-        place: 1,
-        name: "John",
-        wins: 3,
-        pickedChampion: "UConn",
-        imageUrl: "/images/john.png",
-    },
-    {
-        place: 3,
-        name: "Mike",
-        wins: 1,
-        pickedChampion: "Purdue",
-        imageUrl: "/images/mike.png",
-    },
+// // Hardcoded for now – replace with DB data later
+// const podiumWinners: PodiumWinner[] = [
+//     {
+//         place: 2,
+//         name: "Pop-Pop",
+//         wins: 0,
+//         pickedChampion: "Houston",
+//         imageUrl: "/images/pop-pop.png",
+//     },
+//     {
+//         place: 1,
+//         name: "Uncle Rob",
+//         wins: 1,
+//         pickedChampion: "UConn",
+//         imageUrl: "/images/uncle-rob.png",
+//     },
+//     {
+//         place: 3,
+//         name: "Uncle Steve",
+//         wins: 0,
+//         pickedChampion: "Purdue",
+//         imageUrl: "/images/uncle-steve.png",
+//     },
 
-];
+// ];
 
 export default function PodiumWinners() {
     // Ensure they’re ordered 2,1,3 visually
@@ -46,7 +47,7 @@ export default function PodiumWinners() {
                 textAlign: "center",
             }}
         >
-            <h2 style={{ marginBottom: "1.5rem" }}>Top Bracket Winners</h2>
+            <h2 style={{ marginBottom: "1.5rem" }}>Diddy Bop March Madness Winner History</h2>
 
             <div
                 style={{
