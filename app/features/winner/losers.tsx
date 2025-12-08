@@ -1,58 +1,59 @@
 "use client";
+import { Losers as podiumWinners } from '.';
 
-type Loser = {
-    name: string;
-    place: number;
-    wins: number;
-    pickedChampion: string;
-    imageUrl: string;
-};
+// type Loser = {
+//     name: string;
+//     place: number;
+//     wins: number;
+//     pickedChampion: string;
+//     imageUrl: string;
+// };
 
-const podiumWinners: Loser[] = [
-    {
-        place: 4,
-        name: "Steve",
-        wins: 1,
-        pickedChampion: "Houston",
-        imageUrl: "/images/tarm.jpg",
-    },
-    {
-        place: 5,
-        name: "Robert",
-        wins: 3,
-        pickedChampion: "UConn",
-        imageUrl: "/images/tarm.jpg",
-    },
-    {
-        place: 6,
-        name: "Mathew",
-        wins: 1,
-        pickedChampion: "Purdue",
-        imageUrl: "/images/tarm.jpg",
-    },
-    {
-        place: 7,
-        name: "Steve",
-        wins: 1,
-        pickedChampion: "Houston",
-        imageUrl: "/images/tarm.jpg",
-    },
-    {
-        place: 8,
-        name: "Robert",
-        wins: 3,
-        pickedChampion: "UConn",
-        imageUrl: "/images/tarm.jpg",
-    },
-    {
-        place: 9,
-        name: "Mathew",
-        wins: 1,
-        pickedChampion: "Purdue",
-        imageUrl: "/images/tarm.jpg",
-    },
+// const podiumWinners: Loser[] = [
+//     {
+//         place: 4,
+//         name: "Steve",
+//         wins: 1,
+//         pickedChampion: "Houston",
+//         imageUrl: "/images/tarm.jpg",
+//     },
+//     {
+//         place: 5,
+//         name: "Robert",
+//         wins: 3,
+//         pickedChampion: "UConn",
+//         imageUrl: "/images/tarm.jpg",
+//     },
+//     {
+//         place: 6,
+//         name: "Mathew",
+//         wins: 1,
+//         pickedChampion: "Purdue",
+//         imageUrl: "/images/tarm.jpg",
+//     },
+//     {
+//         place: 7,
+//         name: "Steve",
+//         wins: 1,
+//         pickedChampion: "Houston",
+//         imageUrl: "/images/tarm.jpg",
+//     },
+//     {
+//         place: 8,
+//         name: "Robert",
+//         wins: 3,
+//         pickedChampion: "UConn",
+//         imageUrl: "/images/tarm.jpg",
+//     },
+//     {
+//         place: 9,
+//         name: "Mathew",
+//         wins: 1,
+//         pickedChampion: "Purdue",
+//         imageUrl: "/images/tarm.jpg",
+//     },
 
-];
+// ];
 
 export default function PodiumLosers() {
     // Ensure they’re ordered 4,5,6 visually
@@ -65,7 +66,6 @@ export default function PodiumLosers() {
                 textAlign: "center",
             }}
         >
-            <h2 style={{ marginBottom: "1.5rem" }}>Bottom Bracket Losers</h2>
 
             <div
                 style={{

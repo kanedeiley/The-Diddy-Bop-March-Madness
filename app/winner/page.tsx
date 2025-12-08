@@ -1,6 +1,6 @@
 import React from 'react'
-import PodiumWinners from '../features/winners/podium'
-import PodiumLosers from '../features/winners/losers'
+import PodiumWinners from '../features/winner/podium'
+import PodiumLosers from '../features/winner/losers'
 
 function page() {
   return (
