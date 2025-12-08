@@ -3,7 +3,15 @@
 import { createClient } from '@/app/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
-export default function SignOut() {
+interface SignOutProps {
+  variant?: 'default' | 'menu' | 'minimal'
+  className?: string
+}
+
+export default function SignOut({ 
+  variant = 'default', 
+  className = ''
+}: SignOutProps) {
   const supabase = createClient()
   const router = useRouter()
 
@@ -13,10 +21,18 @@ export default function SignOut() {
     router.refresh()
   }
 
+  const baseStyles = "transition-all"
+  
+  const variants = {
+    default: "text-sm py-2 px-4 rounded text-gray-600 hover:bg-gray-100/50",
+    menu: "w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md",
+    minimal: "text-sm text-gray-600 hover:text-gray-900"
+  }
+
   return (
     <button
       onClick={handleSignOut}
-      className="text-sm py-2 px-4 rounded transition-all text-gray-600 hover:bg-gray-100/50"
+      className={`${baseStyles} ${variants[variant]} ${className}`}
     >
       Sign out
     </button>
