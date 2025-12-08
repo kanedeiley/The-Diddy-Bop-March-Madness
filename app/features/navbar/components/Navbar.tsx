@@ -1,10 +1,10 @@
 // Navbar.tsx
 'use client'
 import { usePathname } from "next/navigation"
-import SignOut from "@/app/components/auth/sign-out"
 import Link from "next/link"
 import { Logo } from "@/app/components/icons"
-import ProfilePhoto from "../../profile/components/ProfilePhoto"
+import ProfileHover from "./ProfileHover"
+import PageNav from "./PageNav"
 import { Button } from "@/app/components/ui/button"
 
 interface NavbarProps {
@@ -18,20 +18,19 @@ export default function Navbar({ profile }: NavbarProps) {
 
   return (
     <div>
-      <nav className="flex w-full border-b border-gray-700/20 align-center items-center justify-between h-auto py-4 px-8"
-      >
-        <Link href={'/'}>
-          <Logo className="h-6 stroke-black fill-black text-gray-700" />
-
-        </Link>
-        <div className="flex w-auto gap-6 items-center align-center">
-          <Button className="h-6 w-6" >
-            -
-          </Button>
-          <Link href={'/profile'}>
-          <ProfilePhoto profile={profile} />
+      <nav className="fixed top-0 left-0 right-0 z-50 flex w-full border-b border-gray-700/20 items-center justify-between h-auto py-4 px-8 bg-white">
+        <div className="flex items-center gap-8">
+          <Link href={'/'}>
+            <Logo className="h-6 stroke-black fill-black text-gray-700" />
           </Link>
-      </div>
+          
+
+        </div>
+        
+        <div className="flex w-auto gap-6 items-center align-center justify-center">
+          <PageNav />
+          <ProfileHover profile={profile} />
+        </div>
       </nav>
     </div>
   )

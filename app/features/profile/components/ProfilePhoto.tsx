@@ -8,7 +8,6 @@ interface ProfilePhotoProps {
 
 export default function ProfilePhoto({ profile }: ProfilePhotoProps) {
 
-  // Safely handle missing profile (server may return null)
   const avatar = profile?.avatar_url
 
   return (
@@ -21,7 +20,7 @@ export default function ProfilePhoto({ profile }: ProfilePhotoProps) {
           src={avatar}
           width={24}
           height={24}
-          className="w-full h-full object-cover"
+          className="w-full h-full rounded object-cover"
         />
       )}
     </div>
