@@ -1,7 +1,7 @@
-
+import ScoreboardBoard from "../features/scoreboard/board"
 function page() {
     return (
-        <div>page</div>
+        <ScoreboardBoard />
     )
 }
 
