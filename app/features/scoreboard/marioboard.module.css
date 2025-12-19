@@ -1,0 +1,69 @@
+.mk-container {
+    padding: 20px;
+    font-family: 'Verdana', sans-serif;
+    text-align: center;
+    background: linear-gradient(180deg, #87CEFA, #ffffff);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: auto;
+}
+
+.mk-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffcd00;
+    text-shadow: 3px 3px 0px #000;
+}
+
+.mk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2rem;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.mk-table th {
+    background: #ff3131;
+    color: white;
+    padding: 12px;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.mk-table td {
+    padding: 12px;
+    font-weight: bold;
+}
+
+/* Row striping */
+.mk-row:nth-child(even) {
+    background: #f2f2f2;
+}
+
+/* Mario Kart style podium colors */
+.mk-pos-1 {
+    background: gold !important;
+    color: black;
+}
+
+.mk-pos-2 {
+    background: silver !important;
+    color: black;
+}
+
+.mk-pos-3 {
+    background: #cd7f32 !important;
+    /* bronze */
+    color: white;
+}
+
+/* Add a hover effect */
+.mk-row:hover {
+    transform: scale(1.03);
+    transition: 0.15s ease-in-out;
+    background: #ffe680 !important;
+}
