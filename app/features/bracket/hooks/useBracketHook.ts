@@ -14,8 +14,10 @@ type Game = {
   position: number;
 };
 
-const useBracketHook = () => {
-  const [selectedRegion, setSelectedRegion] = useState<keyof typeof regionData>("south")
+type RegionKey = 'south' | 'east' | 'midwest' | 'west' | 'final';
+
+const useBracketHook = (teamsByRegion: Record<string, team[]>) => {
+  const [selectedRegion, setSelectedRegion] = useState<RegionKey>("south")
   const [selectedCinderellas, setSelectedCinderellas] = useState<Record<string, cinderella | null>>({
     south: null,
     east: null,
@@ -45,89 +47,14 @@ const useBracketHook = () => {
   const [nationalChampion, setNationalChampion] = useState<team | null>(null)
 
 
-const southTeams: team[] = [
-  { id: 's1', name: 'Duke', seed: 1, region: 'south' },
-  { id: 's2', name: 'UCLA', seed: 2, region: 'south' },
-  { id: 's3', name: 'Gonzaga', seed: 3, region: 'south' },
-  { id: 's4', name: 'Kansas', seed: 4, region: 'south' },
-  { id: 's5', name: 'Wisconsin', seed: 5, region: 'south' },
-  { id: 's6', name: 'TCU', seed: 6, region: 'south' },
-  { id: 's7', name: 'Northwestern', seed: 7, region: 'south' },
-  { id: 's8', name: 'Michigan St', seed: 8, region: 'south' },
-  { id: 's9', name: 'USC', seed: 9, region: 'south' },
-  { id: 's10', name: 'Boise St', seed: 10, region: 'south' },
-  { id: 's11', name: 'Nevada', seed: 11, region: 'south' },
-  { id: 's12', name: 'Oregon', seed: 12, region: 'south' },
-  { id: 's13', name: 'Furman', seed: 13, region: 'south' },
-  { id: 's14', name: 'Grand Canyon', seed: 14, region: 'south' },
-  { id: 's15', name: 'UNC Asheville', seed: 15, region: 'south' },
-  { id: 's16', name: 'Hampton', seed: 16, region: 'south' },
-]
 
-const eastTeams: team[] = [
-  { id: 'e1', name: 'UConn', seed: 1, region: 'east' },
-  { id: 'e2', name: 'Marquette', seed: 2, region: 'east' },
-  { id: 'e3', name: 'Illinois', seed: 3, region: 'east' },
-  { id: 'e4', name: 'Auburn', seed: 4, region: 'east' },
-  { id: 'e5', name: 'Baylor', seed: 5, region: 'east' },
-  { id: 'e6', name: 'Texas', seed: 6, region: 'east' },
-  { id: 'e7', name: 'Florida', seed: 7, region: 'east' },
-  { id: 'e8', name: 'Providence', seed: 8, region: 'east' },
-  { id: 'e9', name: 'Memphis', seed: 9, region: 'east' },
-  { id: 'e10', name: 'Seton Hall', seed: 10, region: 'east' },
-  { id: 'e11', name: 'Virginia', seed: 11, region: 'east' },
-  { id: 'e12', name: 'Charleston', seed: 12, region: 'east' },
-  { id: 'e13', name: 'Kent St', seed: 13, region: 'east' },
-  { id: 'e14', name: 'Colgate', seed: 14, region: 'east' },
-  { id: 'e15', name: 'Vermont', seed: 15, region: 'east' },
-  { id: 'e16', name: 'Howard', seed: 16, region: 'east' },
-]
-
-const westTeams: team[] = [
-  { id: 'w1', name: 'Arizona', seed: 1, region: 'west' },
-  { id: 'w2', name: 'Houston', seed: 2, region: 'west' },
-  { id: 'w3', name: 'Creighton', seed: 3, region: 'west' },
-  { id: 'w4', name: 'Alabama', seed: 4, region: 'west' },
-  { id: 'w5', name: 'San Diego St', seed: 5, region: 'west' },
-  { id: 'w6', name: 'Iowa St', seed: 6, region: 'west' },
-  { id: 'w7', name: 'Dayton', seed: 7, region: 'west' },
-  { id: 'w8', name: 'Mississippi St', seed: 8, region: 'west' },
-  { id: 'w9', name: 'Texas Tech', seed: 9, region: 'west' },
-  { id: 'w10', name: "Saint Mary's", seed: 10, region: 'west' },
-  { id: 'w11', name: 'Michigan', seed: 11, region: 'west' },
-  { id: 'w12', name: 'Liberty', seed: 12, region: 'west' },
-  { id: 'w13', name: 'Yale', seed: 13, region: 'west' },
-  { id: 'w14', name: 'Montana St', seed: 14, region: 'west' },
-  { id: 'w15', name: 'Long Beach St', seed: 15, region: 'west' },
-  { id: 'w16', name: 'Weber St', seed: 16, region: 'west' },
-]
-
-const midwestTeams: team[] = [
-  { id: 'm1', name: 'Purdue', seed: 1, region: 'midwest' },
-  { id: 'm2', name: 'Tennessee', seed: 2, region: 'midwest' },
-  { id: 'm3', name: 'North Carolina', seed: 3, region: 'midwest' },
-  { id: 'm4', name: 'Arkansas', seed: 4, region: 'midwest' },
-  { id: 'm5', name: 'Miami', seed: 5, region: 'midwest' },
-  { id: 'm6', name: 'Clemson', seed: 6, region: 'midwest' },
-  { id: 'm7', name: 'Indiana', seed: 7, region: 'midwest' },
-  { id: 'm8', name: 'Oklahoma', seed: 8, region: 'midwest' },
-  { id: 'm9', name: 'Colorado', seed: 9, region: 'midwest' },
-  { id: 'm10', name: 'Pittsburgh', seed: 10, region: 'midwest' },
-  { id: 'm11', name: 'Drake', seed: 11, region: 'midwest' },
-  { id: 'm12', name: 'VCU', seed: 12, region: 'midwest' },
-  { id: 'm13', name: 'Iona', seed: 13, region: 'midwest' },
-  { id: 'm14', name: 'Samford', seed: 14, region: 'midwest' },
-  { id: 'm15', name: 'Cleveland St', seed: 15, region: 'midwest' },
-  { id: 'm16', name: 'Wagner', seed: 16, region: 'midwest' },
-]
-
-  const regionData = {
-    south: southTeams,
-    east: eastTeams,
-    midwest: midwestTeams,
-    west: westTeams,
-    final: southTeams
-  }
+  const regionData: Record<RegionKey, team[]> = {
+    south: teamsByRegion["south"] || [],
+    east: teamsByRegion["east"] || [],
+    midwest: teamsByRegion["midwest"] || [],
+    west: teamsByRegion["west"] || [],
+    final: teamsByRegion["south"] || [], // placeholder, same as before
+  };
 
   // Initialize games for a specific region
   const initializeGamesForRegion = (region: keyof typeof regionData): Game[] => {
@@ -340,18 +267,17 @@ const midwestTeams: team[] = [
 
   // Reset all brackets
   const resetAllBrackets = () => {
-    setRegionalGames({
-      south: initializeGamesForRegion('south'),
-      east: initializeGamesForRegion('east'),
-      midwest: initializeGamesForRegion('midwest'),
-      west: initializeGamesForRegion('west'),
-    })
-    setRegionWinners({
-      south: null,
-      east: null,
-      midwest: null,
-      west: null,
-    })
+    const regions: RegionKey[] = ['south', 'east', 'midwest', 'west'];
+    
+    const resetGames: Record<RegionKey, Game[]> = {} as Record<RegionKey, Game[]>;
+    const resetWinners: Record<RegionKey, team | null> = {} as Record<RegionKey, team | null>;
+    
+    regions.forEach(region => {
+      resetGames[region] = initializeGamesForRegion(region as keyof typeof regionData);   resetWinners[region] = null;
+    });
+    
+    setRegionalGames(resetGames)
+    setRegionWinners(resetWinners)
     setFinalFourGames([])
     setNationalChampion(null)
   }

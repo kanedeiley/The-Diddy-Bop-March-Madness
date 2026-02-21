@@ -1,7 +1,13 @@
 import { BracketContext } from "./useBracketContext";
 import useBracketHook from "../hooks/useBracketHook";
+import { TournamentTeam } from "@/app/lib/teams";
 
-export const BracketProvider = ({ children }: { children: React.ReactNode }) => {
+interface BreacketProviderProps {
+  children: React.ReactNode;
+  teamsByRegion: Record<string, TournamentTeam[]>
+}
+
+export const BracketProvider = ({ children, teamsByRegion }: BreacketProviderProps) => {
   const {
     // Region selection
     selectedRegion,
@@ -35,7 +41,7 @@ export const BracketProvider = ({ children }: { children: React.ReactNode }) => 
     selectFinalFourWinner,
     areAllRegionsComplete,
     getRegionWinner,
-  } = useBracketHook();
+  } = useBracketHook(teamsByRegion);
 
   return (
     <BracketContext.Provider
