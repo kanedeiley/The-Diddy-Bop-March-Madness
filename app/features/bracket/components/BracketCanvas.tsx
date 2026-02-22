@@ -4,12 +4,14 @@ import Bracket from './Bracket';
 import { BracketProvider } from '../context/BracketProvider';
 import BracketMenu from './BracketMenu';
 import type { TournamentTeam } from '@/app/lib/teams';
+import { SavedBracket } from '../hooks/useBracketHook';
 
 interface BracketCanvasProps {
   teamsByRegion: Record<string, TournamentTeam[]>;
+  savedBracket: SavedBracket | null;
 }
 
-export default function BracketCanvas({ teamsByRegion }: BracketCanvasProps) {
+export default function BracketCanvas({ teamsByRegion, savedBracket }: BracketCanvasProps) {
   const [scale, setScale] = useState(0.5);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -111,7 +113,7 @@ export default function BracketCanvas({ teamsByRegion }: BracketCanvasProps) {
   };
 
   return (
-    <BracketProvider teamsByRegion={teamsByRegion}>
+    <BracketProvider teamsByRegion={teamsByRegion} savedBracket={savedBracket}>
       <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
         <div
           ref={canvasRef}

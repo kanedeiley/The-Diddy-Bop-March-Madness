@@ -2,10 +2,14 @@ import { useBracketContext } from "../context/useBracketContext"
 import { regions } from "../constants"
 import { Cancel, Check, Flag } from "@/app/components/icons/EditIcons"
 import { useState } from "react"
+import { useBracketSave } from "../hooks/useBracketSave"
+
 
 export default function BracketMenu() {
   const { selectedRegion, setSelectedRegion } = useBracketContext()
   const [isHovered, setIsHovered] = useState(false)
+  const { save, saving, error } = useBracketSave(1997)
+
 
   return (
     <>
@@ -58,6 +62,8 @@ export default function BracketMenu() {
             title="Submit Bracket"
               type="button"
               className="capitalize text-xs py-2 px-2 rounded-full transition-all text-green-600 hover:bg-green-100/50 whitespace-nowrap"
+              onClick={save} 
+              disabled={saving}
             >
               <Check className="h-4 w-4" />
             </button>

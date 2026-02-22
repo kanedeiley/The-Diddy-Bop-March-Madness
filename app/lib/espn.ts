@@ -1,4 +1,7 @@
-// lib/espn.ts
+import { Root, Team2 } from '@/app/types';
+
+// Logo (CDN) -> https://a.espncdn.com/i/teamlogos/ncaa/500/145.png (can use in image tag)
+// Teams -> https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams
 const ESPN_BASE = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball';
 
 export interface ESPNGameResult {
@@ -10,6 +13,9 @@ export interface ESPNGameResult {
     winner: boolean;
   }[];
 }
+
+
+
 
 export async function getScoreboard(date?: string): Promise<ESPNGameResult[]> {
   const url = date
@@ -32,4 +38,22 @@ export async function getScoreboard(date?: string): Promise<ESPNGameResult[]> {
       })),
     };
   });
+}
+
+
+export async function getTeams(): Promise<Team2[]> {
+  const url = `${ESPN_BASE}/teams?limit=2000`;
+  const res = await fetch(url, { next: { revalidate: 60 } });
+  if (!res.ok) throw new Error('Failed to fetch teams');
+  const data: Root = await res.json();
+  const teams: Team2[] = [];
+  data.sports.forEach(sport => {
+    sport.leagues.forEach(league => {
+      league.teams.forEach(teamWrapper => {
+        teams.push(teamWrapper.team);
+      });
+    });
+  });
+
+  return teams;
 }
