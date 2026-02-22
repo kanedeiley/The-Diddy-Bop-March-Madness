@@ -1,19 +1,11 @@
 'use client';
 import { useEffect } from 'react';
 import { useBracketContext } from '../../context/useBracketContext';
-import { team } from '../../types';
 import CinderellaSelector from './CinderellaSelector';
-import { Cinderella } from '@/app/components/icons';
 import RegionChampion from './RegionChampion';
-
-type Game = {
-  id: string;
-  team1?: team;
-  team2?: team;
-  winner?: team;
-  round: number;
-  position: number;
-};
+import { Game } from '../../types';
+import TeamCard1 from '../../components/teams/TeamCard1';
+import TeamCard2 from '../../components/teams/TeamCard2';
 
 type RegionBracketProps = {
   position: 'left' | 'right';
@@ -40,10 +32,6 @@ export default function RegionBracket({ position }: RegionBracketProps) {
   const gameWidth = 200;
   const roundGap = 280;
   const verticalGap = 20;
-
-  const selectWinner = (game: Game, team: team) => {
-    selectWinnerFromContext(selectedRegion, game.id, team);
-  };
 
   const getGamePosition = (game: Game) => {
     const round = game.round;
@@ -202,69 +190,9 @@ export default function RegionBracket({ position }: RegionBracketProps) {
             >
               <div className="bg-white rounded-lg border-2 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                 {/* Team 1 */}
-                <div
-                  onClick={() => game.team1 && selectWinner(game, game.team1)}
-                  className={`
-                    px-3 py-2 border-b border-gray-200 cursor-pointer
-                    transition-all flex items-center
-                    ${!game.team1 ? 'cursor-not-allowed' : ''}
-                    ${
-                      (selectedCinderella && game.team1 && selectedCinderella.id === game.team1.id && game.winner?.id === game.team1.id)
-                        ? 'bg-pink-100 font-semibold border-l-4 border-l-pink-500'
-                        : (game.winner?.id === game.team1?.id
-                            ? 'bg-green-100 font-bold border-l-4 border-l-green-500'
-                            : 'hover:bg-gray-50')
-                    }
-                  `}
-                >
-                  {game.team1 ? (
-                    <>
-                      <span className="text-xs font-semibold text-gray-500 mr-2 w-6">
-                        {game.team1.seed}
-                      </span>
-                      <span className="text-sm flex-1 truncate">
-                        {game.team1.name}
-                      </span>
-                      {(selectedCinderella && game.team1 && selectedCinderella.id === game.team1.id && game.winner?.id === game.team1.id) && (
-                        <Cinderella className='h-4 w-4' />
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-sm text-gray-400 italic">TBD</span>
-                  )}
-                </div>
-                
+                <TeamCard1 game={game} />
                 {/* Team 2 */}
-                <div
-                  onClick={() => game.team2 && selectWinner(game, game.team2)}
-                  className={`
-                    px-3 py-2 cursor-pointer transition-all flex items-center
-                    ${!game.team2 ? 'cursor-not-allowed' : ''}
-                    ${
-                      (selectedCinderella && game.team2 && selectedCinderella.id === game.team2.id && game.winner?.id === game.team2.id)
-                        ? 'bg-pink-100 font-semibold border-l-4 border-l-pink-500'
-                        : (game.winner?.id === game.team2?.id
-                            ? 'bg-green-100 font-bold border-l-4 border-l-green-500'
-                            : 'hover:bg-gray-50')
-                    }
-                  `}
-                >
-                  {game.team2 ? (
-                    <>
-                      <span className="text-xs font-semibold text-gray-500 mr-2 w-6">
-                        {game.team2.seed}
-                      </span>
-                      <span className="text-sm flex-1 truncate">
-                        {game.team2.name}
-                      </span>
-                      {(selectedCinderella && game.team2 && selectedCinderella.id === game.team2.id && game.winner?.id === game.team2.id) && (
-                        <Cinderella className='h-4 w-4' />
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-sm text-gray-400 italic">TBD</span>
-                  )}
-                </div>
+                <TeamCard2 game={game} />
               </div>
             </div>
           );
@@ -280,7 +208,6 @@ export default function RegionBracket({ position }: RegionBracketProps) {
         >
           <CinderellaSelector />
         </div>
-
 
       {currentRegionWinner && (
         <>

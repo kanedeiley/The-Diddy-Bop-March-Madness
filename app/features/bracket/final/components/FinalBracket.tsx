@@ -5,6 +5,7 @@ import { useBracketContext } from '../../context/useBracketContext';
 import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
 import { team } from '../../types';
 import NationalChampion from './FinalChampion';
+import TeamCard1 from '../../components/teams/TeamCard1';
 
 type Game = {
   id: string;
@@ -204,39 +205,7 @@ export default function FinalBracket({ position }: FinalFourBracketProps) {
             >
               <div className="bg-white rounded-lg border-2 border-gray-300 shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                 {/* Team 1 */}
-                <div
-                  onClick={() => game.team1 && selectWinner(game, game.team1)}
-                  className={`
-                    px-3 py-2 border-b border-gray-200 cursor-pointer
-                    transition-all flex items-center
-                    ${!game.team1 ? 'cursor-not-allowed' : ''}
-                    ${
-                      (selectedCinderella && game.team1 && selectedCinderella.id === game.team1.id && game.winner?.id === game.team1.id)
-                        ? 'bg-pink-100 font-semibold border-l-4 border-l-pink-500'
-                        : (game.winner?.id === game.team1?.id
-                            ? 'bg-green-100 font-bold border-l-4 border-l-green-500'
-                            : 'hover:bg-gray-50')
-                    }
-                  `}
-                >
-                  {game.team1 ? (
-                    <>
-                      <span className="text-xs font-semibold text-gray-500 mr-2 w-6">
-                        {game.team1.seed}
-                      </span>
-                      <span className="text-sm flex-1 truncate">
-                        {game.team1.name}
-                      </span>
-                      {game.team1.region && (
-                        <span className="text-xs text-gray-400 ml-2">
-                          {game.team1.region}
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-sm text-gray-400 italic">TBD</span>
-                  )}
-                </div>
+                <TeamCard1 game={game} />
                 
                 {/* Team 2 */}
                 <div

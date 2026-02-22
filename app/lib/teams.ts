@@ -30,7 +30,7 @@ export async function getTeamsByYear(year: number): Promise<Record<string, Tourn
     const region = row.region.toLowerCase();
     if (!grouped[region]) grouped[region] = [];
     grouped[region].push({
-      id: `${region[0]}${row.seed}`,  // "s1", "e2", etc. - matches your existing IDs
+      id: `${region[0]}${row.seed}`, 
       espnId: row.espn_id,
       name: row.name,
       seed: row.seed,
