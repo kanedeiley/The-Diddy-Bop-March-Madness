@@ -13,10 +13,6 @@ export interface ESPNGameResult {
     winner: boolean;
   }[];
 }
-
-
-
-
 export async function getScoreboard(date?: string): Promise<ESPNGameResult[]> {
   const url = date
     ? `${ESPN_BASE}/scoreboard?dates=${date}`

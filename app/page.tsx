@@ -1,11 +1,11 @@
-// app/page.tsx
 import { getTeamsByYear } from './lib/teams'
 import { loadBracket } from './features/bracket/actions/bracket'
 import BracketCanvas from './features/bracket/components/BracketCanvas'
+import { getTournamentYear } from './lib/config/tournament'
 
 export default async function Page() {
-  const teamsByRegion = await getTeamsByYear(1997)
-  const savedBracket = await loadBracket(1997).catch(() => null) // null if not logged in or no bracket
+  const teamsByRegion = await getTeamsByYear(getTournamentYear())
+  const savedBracket = await loadBracket(getTournamentYear()).catch(() => null) // null if not logged in or no bracket
 
   return (
     <BracketCanvas

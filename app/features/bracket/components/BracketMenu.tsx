@@ -3,12 +3,14 @@ import { regions } from "../constants"
 import { Cancel, Check, Flag } from "@/app/components/icons/EditIcons"
 import { useState } from "react"
 import { useBracketSave } from "../hooks/useBracketSave"
+import { getTournamentYear } from "@/app/lib/config/tournament"
 
 
 export default function BracketMenu() {
+  const year = getTournamentYear()
   const { selectedRegion, setSelectedRegion } = useBracketContext()
   const [isHovered, setIsHovered] = useState(false)
-  const { save, saving, error } = useBracketSave(1997)
+  const { save, saving, error } = useBracketSave(year)
 
 
   return (
