@@ -1,12 +1,10 @@
 'use client';
-
 import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
 import { BracketProvider } from '@/app/features/bracket/context/BracketProvider';
 import { ViewableBracket } from '@/app/features/bracket/actions/view-bracket';
 import { SavedBracket } from '@/app/features/bracket/hooks/useBracketHook';
 import Bracket from '@/app/features/bracket/components/Bracket';
-import RegionSelector from '@/app/features/bracket/region/components/RegionSelector';
+import RegionSelectorDropdown from '@/app/features/bracket/region/components/RegionSelectorDropdown';
 type Props = {
   bracket: ViewableBracket;
   teamsByRegion: Record<string, any[]>;
@@ -115,34 +113,28 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
     <BracketProvider teamsByRegion={teamsByRegion} savedBracket={savedBracket}>
       <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
         {/* Header bar */}
-        <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between z-10">
-          <div className="flex items-center gap-3">
-            {bracket.avatar_url ? (
-              <img
-                src={bracket.avatar_url}
-                alt={bracket.username}
-                className="w-8 h-8 rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">
-                {bracket.username.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <h1 className="text-lg font-bold text-gray-900">
-              {bracket.username}&apos;s Bracket
-            </h1>
-          </div>
+        <div className="bg-white border-b border-gray-200 px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between z-10">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    {bracket.avatar_url ? (
+                    <img
+                        src={bracket.avatar_url}
+                        alt={bracket.username}
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
+                    />
+                    ) : (
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500 flex-shrink-0">
+                        {bracket.username.charAt(0).toUpperCase()}
+                    </div>
+                    )}
+                    <h1 className="text-sm sm:text-base font-semibold text-gray-900 truncate">
+                    {bracket.username}&apos;s Bracket
+                    </h1>
+                </div>
 
-          <div className="flex items-center gap-4">
-            <RegionSelector />
-            <Link
-              href="/bracket"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              ← Your bracket
-            </Link>
-          </div>
-        </div>
+                <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+                    <RegionSelectorDropdown />
+                </div>
+                </div>
 
         {/* Scrollable canvas — bracket is read-only */}
         <div
