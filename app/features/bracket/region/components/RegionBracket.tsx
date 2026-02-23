@@ -1,4 +1,3 @@
-// features/bracket/components/bracket/RegionBracket.tsx
 'use client';
 
 import { useEffect } from 'react';
@@ -20,10 +19,10 @@ export default function RegionBracket({ position }: RegionBracketProps) {
     currentRegionGames,
     ensureRegionInitialized,
     currentRegionWinner,
+    bracketId,
   } = useBracketContext();
 
-  const { score, getPickScore, getActualResult, isLoading } =
-    useBracketScore();
+const { score, getPickScore, getActualResult, isLoading } = useBracketScore(bracketId ?? undefined);
 
   useEffect(() => {
     ensureRegionInitialized(selectedRegion);

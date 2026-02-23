@@ -395,6 +395,9 @@ const useBracketHook = (
     })
   }
 
+  const bracketId = savedBracket?.bracket.id ?? null;
+
+
   const resetRegion = (region: string) => {
     setRegionalGames(prev => ({
       ...prev,
@@ -535,6 +538,7 @@ const ensureFinalFourInitialized = () => {
   const currentRegionWinner = regionWinners[selectedRegion]
 
   return {
+    bracketId,
     selectedRegion,
     setSelectedRegion,
     regionData,

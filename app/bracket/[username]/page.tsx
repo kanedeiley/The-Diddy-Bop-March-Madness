@@ -1,4 +1,3 @@
-// app/bracket/[username]/page.tsx
 import { redirect } from 'next/navigation';
 import { createClient } from '@/app/lib/supabase/server';
 import { loadBracketByUsername } from '@/app/features/bracket/actions/view-bracket';
@@ -30,7 +29,7 @@ export default async function ViewBracketPage({ params }: Props) {
         <div className="bg-white rounded-xl border border-gray-200 p-8 text-center max-w-md shadow-sm">
           <p className="text-gray-500 text-lg">{result.error}</p>
           <a
-            href="/bracket"
+            href="/"
             className="inline-block mt-4 text-sm text-blue-600 hover:underline"
           >
             ← Back to your bracket

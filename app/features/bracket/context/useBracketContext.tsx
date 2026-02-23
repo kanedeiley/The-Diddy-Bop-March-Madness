@@ -43,6 +43,7 @@ export type BracketContextType = {
   selectFinalFourWinner: (gameId: string, winner: team) => void;
   areAllRegionsComplete: () => boolean;
   getRegionWinner: (regionKey: string) => team | null;
+  bracketId: string | null
 };
 
 export const BracketContext = createContext<BracketContextType | undefined>(

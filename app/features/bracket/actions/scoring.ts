@@ -14,8 +14,13 @@ export type ScoreResponse =
   | { success: true; score: BracketScoreResult; resolved: ResolvedGame[] }
   | { success: false; error: string };
 
-export async function getMyBracketScore(
-  tournamentYear: number
+/**
+ * Score a bracket. If bracketId is provided, scores that specific bracket.
+ * Otherwise scores the logged-in user's bracket.
+ */
+export async function getBracketScore(
+  tournamentYear: number,
+  bracketId?: string
 ): Promise<ScoreResponse> {
   const supabase = await createClient();
   const {
@@ -24,26 +29,31 @@ export async function getMyBracketScore(
 
   if (!user) return { success: false, error: 'Not authenticated' };
 
-  // 1. User's bracket
-  const { data: bracket } = await supabase
-    .from('brackets')
-    .select('id')
-    .eq('user_id', user.id)
-    .eq('tournament_year', tournamentYear)
-    .single();
+  // 1. Find the bracket
+  let targetBracketId = bracketId;
 
-  if (!bracket) return { success: false, error: 'No bracket found' };
+  if (!targetBracketId) {
+    const { data: bracket } = await supabase
+      .from('brackets')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('tournament_year', tournamentYear)
+      .single();
 
-  // 2. User's picks + cinderellas
+    if (!bracket) return { success: false, error: 'No bracket found' };
+    targetBracketId = bracket.id;
+  }
+
+  // 2. Picks + cinderellas for this bracket
   const [picksResult, cinderellasResult] = await Promise.all([
     supabase
       .from('bracket_picks')
       .select('game_slot, team_espn_id, round')
-      .eq('bracket_id', bracket.id),
+      .eq('bracket_id', targetBracketId),
     supabase
       .from('bracket_cinderellas')
       .select('team_espn_id')
-      .eq('bracket_id', bracket.id),
+      .eq('bracket_id', targetBracketId),
   ]);
 
   // 3. Tournament teams grouped by region

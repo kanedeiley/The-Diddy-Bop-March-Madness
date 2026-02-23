@@ -1,8 +1,7 @@
-
 'use client';
 
 import { useEffect, useState, useCallback, useTransition } from 'react';
-import { getMyBracketScore, ScoreResponse } from '../actions/scoring';
+import { getBracketScore, ScoreResponse } from '../actions/scoring';
 import {
   BracketScoreResult,
   ResolvedGame,
@@ -11,29 +10,26 @@ import {
 import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
 
 export interface BracketScoreData {
-  /** Full score result with totals and round breakdown */
   score: BracketScoreResult | null;
-  /** All resolved games (actual results) */
   resolved: ResolvedGame[] | null;
-  /** Lookup a user's scored pick by game_slot */
   getPickScore: (gameSlot: string) => ScoredPick | undefined;
-  /** Lookup the actual result by game_slot */
   getActualResult: (gameSlot: string) => ResolvedGame | undefined;
-  /** Whether scoring is still loading */
   isLoading: boolean;
-  /** Error message if scoring failed */
   error: string | null;
-  /** Refresh scores (e.g. after new games complete) */
   refresh: () => void;
 }
 
-export function useBracketScore(): BracketScoreData {
+/**
+ * Hook to fetch and expose scoring data.
+ * Pass bracketId to score a specific bracket (e.g. when viewing another user's).
+ * Omit to score the logged-in user's bracket.
+ */
+export function useBracketScore(bracketId?: string): BracketScoreData {
   const [score, setScore] = useState<BracketScoreResult | null>(null);
   const [resolved, setResolved] = useState<ResolvedGame[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // Index maps for O(1) lookups
   const [picksBySlot, setPicksBySlot] = useState<Map<string, ScoredPick>>(
     new Map()
   );
@@ -43,7 +39,10 @@ export function useBracketScore(): BracketScoreData {
 
   const fetchScores = useCallback(() => {
     startTransition(async () => {
-      const result = await getMyBracketScore(CURRENT_TOURNAMENT_CONFIG.year);
+      const result = await getBracketScore(
+        CURRENT_TOURNAMENT_CONFIG.year,
+        bracketId
+      );
 
       if (!result.success) {
         setError(result.error);
@@ -54,7 +53,6 @@ export function useBracketScore(): BracketScoreData {
       setResolved(result.resolved);
       setError(null);
 
-      // Build lookup maps
       setPicksBySlot(
         new Map(result.score.picks.map((p) => [p.game_slot, p]))
       );
@@ -62,7 +60,7 @@ export function useBracketScore(): BracketScoreData {
         new Map(result.resolved.map((g) => [g.game_slot, g]))
       );
     });
-  }, []);
+  }, [bracketId]);
 
   useEffect(() => {
     fetchScores();

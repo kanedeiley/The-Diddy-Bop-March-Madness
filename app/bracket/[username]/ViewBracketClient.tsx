@@ -1,4 +1,3 @@
-// app/bracket/[username]/ViewBracketClient.tsx
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -8,7 +7,6 @@ import { ViewableBracket } from '@/app/features/bracket/actions/view-bracket';
 import { SavedBracket } from '@/app/features/bracket/hooks/useBracketHook';
 import Bracket from '@/app/features/bracket/components/Bracket';
 import RegionSelector from '@/app/features/bracket/region/components/RegionSelector';
-
 type Props = {
   bracket: ViewableBracket;
   teamsByRegion: Record<string, any[]>;
@@ -19,12 +17,13 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [lastTouchDistance, setLastTouchDistance] = useState<number | null>(null);
+  const [lastTouchDistance, setLastTouchDistance] = useState<number | null>(
+    null
+  );
   const canvasRef = useRef<HTMLDivElement>(null);
 
   if (!bracket) return null;
 
-  // Reshape into SavedBracket format the hook expects
   const savedBracket: SavedBracket = {
     bracket: { id: bracket.bracket.id, is_locked: true },
     picks: bracket.picks,
@@ -129,17 +128,15 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
                 {bracket.username.charAt(0).toUpperCase()}
               </div>
             )}
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">
-                {bracket.username}&apos;s Bracket
-              </h1>
-            </div>
+            <h1 className="text-lg font-bold text-gray-900">
+              {bracket.username}&apos;s Bracket
+            </h1>
           </div>
 
           <div className="flex items-center gap-4">
             <RegionSelector />
             <Link
-              href="/"
+              href="/bracket"
               className="text-sm text-blue-600 hover:underline"
             >
               ← Your bracket
@@ -147,7 +144,7 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
           </div>
         </div>
 
-        {/* Scrollable canvas (read-only) */}
+        {/* Scrollable canvas — bracket is read-only */}
         <div
           ref={canvasRef}
           className="flex-1 overflow-hidden cursor-grab active:cursor-grabbing touch-none"

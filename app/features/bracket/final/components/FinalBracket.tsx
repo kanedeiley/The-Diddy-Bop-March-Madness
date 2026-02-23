@@ -38,10 +38,11 @@ export default function FinalBracket({ position }: FinalFourBracketProps) {
     selectFinalFourWinner,
     ensureFinalFourInitialized,
     nationalChampion,
+    bracketId
   } = useBracketContext();
 
   const { score, getPickScore, getActualResult, isLoading } =
-    useBracketScore();
+    useBracketScore(bracketId ?? undefined);
 
   useEffect(() => {
     ensureFinalFourInitialized();
