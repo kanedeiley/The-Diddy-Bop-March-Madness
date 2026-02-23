@@ -1,79 +1,23 @@
 import { BracketContext } from "./useBracketContext";
 import useBracketHook from "../hooks/useBracketHook";
+import { TournamentTeam } from "@/app/lib/teams";
+import { SavedBracket } from "../hooks/useBracketHook";
 
-export const BracketProvider = ({ children }: { children: React.ReactNode }) => {
-  const {
-    // Region selection
-    selectedRegion,
-    setSelectedRegion,
-    regionData,
-    
-    // Cinderella management
-    selectedCinderella,
-    selectedCinderellas,
-    setCinderellaForRegion,
-    regionCinderellas,
-    
-    // Game state
-    regionalGames,
-    currentRegionGames,
-    ensureRegionInitialized,
-    
-    // Winner management
-    selectWinner,
-    regionWinners,
-    currentRegionWinner,
-    
-    // Reset functions
-    resetRegion,
-    resetAllBrackets,
+interface BracketProviderProps {
+  children: React.ReactNode;
+  teamsByRegion: Record<string, TournamentTeam[]>;
+  savedBracket: SavedBracket | null;
+}
 
-    // Final Four
-    finalFourGames,
-    nationalChampion,
-    ensureFinalFourInitialized,
-    selectFinalFourWinner,
-    areAllRegionsComplete,
-    getRegionWinner,
-  } = useBracketHook();
+export const BracketProvider = ({ 
+  children, 
+  teamsByRegion, 
+  savedBracket 
+}: BracketProviderProps) => {
+  const bracketState = useBracketHook(teamsByRegion, savedBracket);
 
   return (
-    <BracketContext.Provider
-      value={{
-        // Region selection
-        selectedRegion,
-        setSelectedRegion,
-        regionData,
-        
-        // Cinderella management
-        selectedCinderella,
-        selectedCinderellas,
-        setCinderellaForRegion,
-        regionCinderellas,
-        
-        // Game state
-        regionalGames,
-        currentRegionGames,
-        ensureRegionInitialized,
-        
-        // Winner management
-        selectWinner,
-        regionWinners,
-        currentRegionWinner,
-        
-        // Reset functions
-        resetRegion,
-        resetAllBrackets,
-
-        // Final Four
-        finalFourGames,
-        nationalChampion,
-        ensureFinalFourInitialized,
-        selectFinalFourWinner,
-        areAllRegionsComplete,
-        getRegionWinner,
-      }}
-    >
+    <BracketContext.Provider value={bracketState}>
       {children}
     </BracketContext.Provider>
   );

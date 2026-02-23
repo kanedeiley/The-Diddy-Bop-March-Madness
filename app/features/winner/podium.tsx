@@ -1,138 +1,56 @@
-// PodiumWinners.tsx
 "use client";
+import { Podium1, Podium2, Podium3 } from '@/app/components/icons';
 import { podiumWinners } from '.';
 
-// type PodiumWinner = {
-//     name: string;
-//     place: 1 | 2 | 3;
-//     wins: number;
-//     pickedChampion: string;
-//     imageUrl: string;
-// };
-
-// // Hardcoded for now – replace with DB data later
-// const podiumWinners: PodiumWinner[] = [
-//     {
-//         place: 2,
-//         name: "Pop-Pop",
-//         wins: 0,
-//         pickedChampion: "Houston",
-//         imageUrl: "/images/pop-pop.png",
-//     },
-//     {
-//         place: 1,
-//         name: "Uncle Rob",
-//         wins: 1,
-//         pickedChampion: "UConn",
-//         imageUrl: "/images/uncle-rob.png",
-//     },
-//     {
-//         place: 3,
-//         name: "Uncle Steve",
-//         wins: 0,
-//         pickedChampion: "Purdue",
-//         imageUrl: "/images/uncle-steve.png",
-//     },
-
-// ];
-
 export default function PodiumWinners() {
-    // Ensure they’re ordered 2,1,3 visually
-    const ordered = podiumWinners.sort((a, b) => a.place - b.place);
-
     return (
-        <div
-            style={{
-                padding: "1rem",
-                textAlign: "center",
-            }}
-        >
-            <h2 style={{ marginBottom: "1.5rem" }}>Diddy Bop March Madness Winner History</h2>
-
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "flex-end",
-                    gap: "1.5rem",
-                    maxWidth: "800px",
-                    margin: "0 auto",
-                }}
-            >
-                {ordered.map((w) => {
+        <div className="p-4 text-center">
+            <h2 className="mb-6 text-xl md:text-2xl font-semibold">
+                Winners
+            </h2>
+            <div className="flex justify-center items-end gap-2 md:gap-6 max-w-4xl mx-auto">
+                {podiumWinners.map((w) => {
                     const isFirst = w.place === 1;
-                    const height = isFirst ? 200 : 150;
-
                     return (
                         <div
                             key={w.place}
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                flex: 1,
-                                maxWidth: "200px",
-                            }}
+                            className="flex flex-col items-center flex-1 max-w-[180px] md:max-w-[200px]"
                         >
                             {/* Winner info card */}
-                            <div
-                                style={{
-                                    background: "#f4f4f4",
-                                    padding: "0.75rem",
-                                    borderRadius: "0.75rem",
-                                    marginBottom: "0.75rem",
-                                    boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
-                                    width: "100%",
-                                }}
-                            >
+                            <div className="bg-gray-100 p-2 md:p-3 rounded-xl mb-2 md:mb-3 shadow-md w-full">
                                 <div
-                                    style={{
-                                        width: isFirst ? 96 : 80,
-                                        height: isFirst ? 96 : 80,
-                                        borderRadius: "50%",
-                                        overflow: "hidden",
-                                        margin: "0 auto 0.5rem",
-                                        border: isFirst ? "3px solid gold" : "2px solid #ccc",
-                                    }}
+                                    className={`
+                                        ${isFirst ? 'w-20 h-20 md:w-24 md:h-24 border-2 md:border-3 border-yellow-400' : 'w-16 h-16 md:w-20 md:h-20 border-2 border-gray-300'}
+                                        rounded-full overflow-hidden mx-auto mb-2
+                                    `}
                                 >
                                     <img
                                         src={w.imageUrl}
                                         alt={w.name}
-                                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                        className="w-full h-full object-cover"
                                     />
                                 </div>
-                                <div style={{ fontWeight: 600 }}>{w.name}</div>
-                                <div style={{ fontSize: "0.9rem", color: "#666" }}>
+                                <div className="font-semibold text-sm md:text-base">{w.name}</div>
+                                <div className="text-xs md:text-sm text-gray-600">
                                     Place: {w.place}
                                 </div>
-                                <div style={{ fontSize: "0.9rem", marginTop: "0.25rem" }}>
+                                <div className="text-xs md:text-sm mt-1">
                                     Wins: <strong>{w.wins}</strong>
                                 </div>
-                                <div style={{ fontSize: "0.9rem", marginTop: "0.25rem" }}>
+                                <div className="text-xs md:text-sm mt-1 truncate">
                                     Picked: <strong>{w.pickedChampion}</strong>
                                 </div>
                             </div>
 
                             {/* Podium block */}
-                            <div
-                                style={{
-                                    width: "100%",
-                                    height,
-                                    background:
-                                        w.place === 1
-                                            ? "linear-gradient(to top, #ffd700, #ffe680)"
-                                            : w.place === 2
-                                                ? "linear-gradient(to top, #c0c0c0, #e5e5e5)"
-                                                : "linear-gradient(to top, #cd7f32, #f0c193)",
-                                    borderRadius: "0.75rem 0.75rem 0 0",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    fontWeight: 700,
-                                    fontSize: "1.25rem",
-                                }}
-                            >
-                                #{w.place}
+                            <div className="w-full">
+                                {w.place === 2 ? (
+                                    <Podium2 className="w-full h-auto " />
+                                ) : w.place === 1 ? (
+                                    <Podium1 className="w-full h-auto" />
+                                ) : (
+                                    <Podium3 className="w-full h-auto" />
+                                )}
                             </div>
                         </div>
                     );

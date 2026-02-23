@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useBracketContext } from '../../context/useBracketContext';
+import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
 
 export default function CinderellaSelector() {
   const {
@@ -12,7 +13,19 @@ export default function CinderellaSelector() {
   } = useBracketContext();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Check if tournament is locked
+  useEffect(() => {
+    const checkLocked = () => {
+      setIsLocked(Date.now() > CURRENT_TOURNAMENT_CONFIG.lockedTime.getTime());
+    };
+    checkLocked();
+    // Optionally recheck periodically
+    const interval = setInterval(checkLocked, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -32,6 +45,7 @@ export default function CinderellaSelector() {
   }, [isOpen]);
 
   const handleSelectCinderella = (team: any) => {
+    if (isLocked) return;
     // Toggle selection - if clicking the same team, deselect
     if (selectedCinderella?.id === team.id) {
       setCinderellaForRegion(selectedRegion, null);
@@ -45,8 +59,10 @@ export default function CinderellaSelector() {
     <div ref={dropdownRef} className="relative">
       {/* Dropdown Button */}
       <div
-        onClick={() => setIsOpen(!isOpen)}
-        className={`rounded-lg border-2 shadow-md hover:shadow-lg transition-all cursor-pointer ${
+        onClick={() => !isLocked && setIsOpen(!isOpen)}
+        className={`rounded-lg border-2 shadow-md hover:shadow-lg transition-all ${
+          isLocked ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
+        } ${
           selectedCinderella
             ? 'bg-gradient-to-r from-pink-50 to-pink-100 border-pink-400'
             : 'bg-white border-gray-300'
@@ -60,7 +76,7 @@ export default function CinderellaSelector() {
               <div className={`text-xs font-semibold uppercase tracking-wider ${
                 selectedCinderella ? 'text-pink-700' : 'text-gray-500'
               }`}>
-                Cinderella Pick
+                Cinderella Pick {isLocked && '(Locked)'}
               </div>
               {selectedCinderella ? (
                 <div className="flex items-center gap-2 mt-1">
@@ -73,7 +89,7 @@ export default function CinderellaSelector() {
                 </div>
               ) : (
                 <div className="text-sm text-gray-400 italic mt-1">
-                  Select a team (11-16 seed)
+                  {isLocked ? 'Tournament locked' : 'Select a team (11-16 seed)'}
                 </div>
               )}
             </div>
@@ -97,7 +113,7 @@ export default function CinderellaSelector() {
       </div>
 
       {/* Dropdown Menu */}
-      {isOpen && (
+      {isOpen && !isLocked && (
         <div className="absolute top-full mt-2 w-full bg-white rounded-lg border-2 border-gray-300 shadow-lg z-10 max-h-80 overflow-y-auto">
           {/* Clear Selection Option */}
           {selectedCinderella && (

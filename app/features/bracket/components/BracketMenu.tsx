@@ -2,10 +2,16 @@ import { useBracketContext } from "../context/useBracketContext"
 import { regions } from "../constants"
 import { Cancel, Check, Flag } from "@/app/components/icons/EditIcons"
 import { useState } from "react"
+import { useBracketSave } from "../hooks/useBracketSave"
+import { CURRENT_TOURNAMENT_CONFIG } from "@/app/config"
 
+
+const {year} = CURRENT_TOURNAMENT_CONFIG
 export default function BracketMenu() {
   const { selectedRegion, setSelectedRegion } = useBracketContext()
   const [isHovered, setIsHovered] = useState(false)
+  const { save, saving, error } = useBracketSave(year)
+
 
   return (
     <>
@@ -34,7 +40,9 @@ export default function BracketMenu() {
         })}
       </div>
     </nav>
- 
+ {(Date.now() > CURRENT_TOURNAMENT_CONFIG.lockedTime.getTime()) ? (
+  null
+ ) : (
     <nav
       aria-label="Bracket actions"
       className="fixed bottom-6 left-6 z-50"
@@ -58,6 +66,8 @@ export default function BracketMenu() {
             title="Submit Bracket"
               type="button"
               className="capitalize text-xs py-2 px-2 rounded-full transition-all text-green-600 hover:bg-green-100/50 whitespace-nowrap"
+              onClick={save} 
+              disabled={saving}
             >
               <Check className="h-4 w-4" />
             </button>
@@ -78,6 +88,7 @@ export default function BracketMenu() {
         </div>
       </div>
     </nav>
+ )}
     </>
   )
 }
