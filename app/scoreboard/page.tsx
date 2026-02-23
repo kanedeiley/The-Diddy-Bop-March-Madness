@@ -1,7 +1,8 @@
+import Leaderboard from "../features/bracket/components/scoring/LeaderBoard"
 
 function page() {
     return (
-        <div>page</div>
+        <div><Leaderboard /></div>
     )
 }
 

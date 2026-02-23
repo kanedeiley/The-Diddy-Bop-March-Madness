@@ -1,6 +1,5 @@
-// features/bracket/lib/resolve-bracket.ts
-
-import { ESPNGameResult } from '@/app/lib/espn';
+import { ESPNGameResult, getScoreboard } from '@/app/lib/espn';
+import { getCached, setCache } from './cache';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -300,4 +299,41 @@ export function scorePicksAgainstResolved(
     picks: scoredPicks,
     round_breakdown,
   };
+}
+
+// ─── Cached Resolution ───────────────────────────────────────────────────────
+
+const SIXTY_SECONDS = 60 * 1000;
+const FIVE_MINUTES = 5 * 60 * 1000;
+
+/**
+ * Cached ESPN fetch + bracket resolution.
+ * Same for ALL users — only depends on tournament config + ESPN results.
+ * 60s TTL during game hours, 5min outside.
+ */
+export async function getResolvedBracketCached(
+  teamsByRegion: Record<string, { espnId: string; seed: number }[]>,
+  startDate: string,
+  endDate: string,
+  finalFourPairings: [string, string][]
+): Promise<ResolvedGame[]> {
+  const cacheKey = `resolved-${startDate}-${endDate}`;
+
+  // Shorter TTL during typical game hours (noon–midnight ET)
+  const hour = new Date().getUTCHours();
+  const isGameTime = hour >= 16 || hour < 5;
+  const ttl = isGameTime ? SIXTY_SECONDS : FIVE_MINUTES;
+
+  const cached = getCached<ResolvedGame[]>(cacheKey, ttl);
+  if (cached) return cached;
+
+  const espnResults = await getScoreboard(startDate, endDate);
+  const resolved = resolveActualBracket(
+    teamsByRegion,
+    espnResults,
+    finalFourPairings
+  );
+
+  setCache(cacheKey, resolved);
+  return resolved;
 }

@@ -1,13 +1,12 @@
-// features/bracket/actions/scoring.ts
 'use server';
 
 import { createClient } from '@/app/lib/supabase/server';
-import { getScoreboard } from '@/app/lib/espn';
 import {
-  resolveActualBracket,
+  getResolvedBracketCached,
   scorePicksAgainstResolved,
   BracketScoreResult,
   ResolvedGame,
+  RoundScoringConfig,
 } from '../lib/resolve-bracket';
 import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
 
@@ -74,20 +73,16 @@ export async function getMyBracketScore(
     teamsByRegion[region].push({ espnId: t.espn_id, seed: t.seed });
   }
 
-  // 6. Fetch ESPN results for tournament date range
+  // 6. Resolve actual bracket (cached — shared across all users)
   const config = CURRENT_TOURNAMENT_CONFIG;
-  const espnResults = await getScoreboard(config.startDate, config.endDate);
-
-  console.log(espnResults)
-
-  // 7. Resolve actual bracket
-  const resolved = resolveActualBracket(
+  const resolved = await getResolvedBracketCached(
     teamsByRegion,
-    espnResults,
+    config.startDate,
+    config.endDate,
     config.finalFourPairings
   );
 
-  // 8. Score picks using DB config
+  // 7. Score picks using DB config
   const cinderellaIds = new Set(
     (cinderellasResult.data ?? []).map((c) => c.team_espn_id)
   );
@@ -96,7 +91,7 @@ export async function getMyBracketScore(
     picksResult.data ?? [],
     resolved,
     cinderellaIds,
-    scoringConfig
+    scoringConfig as RoundScoringConfig[]
   );
 
   return { success: true, score, resolved };
