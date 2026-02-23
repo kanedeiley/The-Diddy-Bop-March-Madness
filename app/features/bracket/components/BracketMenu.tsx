@@ -40,7 +40,9 @@ export default function BracketMenu() {
         })}
       </div>
     </nav>
- 
+ {(Date.now() > CURRENT_TOURNAMENT_CONFIG.lockedTime.getTime()) ? (
+  null
+ ) : (
     <nav
       aria-label="Bracket actions"
       className="fixed bottom-6 left-6 z-50"
@@ -86,6 +88,7 @@ export default function BracketMenu() {
         </div>
       </div>
     </nav>
+ )}
     </>
   )
 }

@@ -1,6 +1,6 @@
 'use server'
-
 import { createClient } from '@/app/lib/supabase/server'
+import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config'
 
 interface BracketPick {
   game_slot: string       // "south-r1-0", "semifinal-1", "championship"
@@ -19,6 +19,7 @@ export async function saveBracket(
   picks: BracketPick[],
   cinderellas: CinderellaPick[]
 ) {
+
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
