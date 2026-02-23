@@ -1,11 +1,12 @@
 import { getTeamsByYear } from './lib/teams'
 import { loadBracket } from './features/bracket/actions/bracket'
 import BracketCanvas from './features/bracket/components/BracketCanvas'
-import { getTournamentYear } from './lib/config/tournament'
+import { CURRENT_TOURNAMENT_CONFIG } from './config'
 
+const {year} = CURRENT_TOURNAMENT_CONFIG
 export default async function Page() {
-  const teamsByRegion = await getTeamsByYear(getTournamentYear())
-  const savedBracket = await loadBracket(getTournamentYear()).catch(() => null) // null if not logged in or no bracket
+  const teamsByRegion = await getTeamsByYear(year)
+  const savedBracket = await loadBracket(year).catch(() => null) // null if not logged in or no bracket
 
   return (
     <BracketCanvas

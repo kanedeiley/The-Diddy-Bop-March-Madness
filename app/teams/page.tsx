@@ -1,8 +1,8 @@
 import Image from "next/image"
-import { getTeams } from "../lib/espn"
+import { getTeams, getScoreboard } from "../lib/espn"
 
 async function page() {
-  const results = await getTeams()
+  const results = await getTeams();
   
   return (
     <div className="flex flex-col p-20 gap-4">
@@ -19,9 +19,11 @@ async function page() {
               />
             )}
             <p>{team.displayName}</p>
+            <p>{team.id}</p>
              <a href={team.links[0].href}>{team.links[1].shortText}</a>
         </span>
         ))}
+        
     </div>
   )
 }

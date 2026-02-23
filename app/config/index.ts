@@ -8,15 +8,18 @@ export type TournamentConfig = {
   championshipLocation?: string;
 };
 
-// Current tournament configuration
-// Order for regions -  [1,2 ... and ... 3,4] play respectively in final four
-export const CURRENT_TOURNAMENT_CONFIG: TournamentConfig = {
+export const CURRENT_TOURNAMENT_CONFIG = {
   year: 2025,
-  regions: ['south', 'east', 'west', 'midwest'],
+  regions: ['South', 'East', 'West', 'Midwest'],
+  startDate: '20250318',  
+  endDate: '20250407',   
+  lockedTime: new Date('2025-05-01T10:20:30Z'),
   finalFourLocation: 'San Antonio, TX',
-  championshipLocation: 'San Antonio, TX',
+  finalFourPairings: [
+    ['south', 'west'],   
+    ['east', 'midwest'], 
+  ] as [string, string][],
 };
-
 // Helper to validate all regions have winners
 export const validateRegionsComplete = (
   completedRegions: string[],
@@ -24,3 +27,5 @@ export const validateRegionsComplete = (
 ): boolean => {
   return config.regions.every(region => completedRegions.includes(region));
 };
+
+

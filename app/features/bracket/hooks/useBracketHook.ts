@@ -86,17 +86,20 @@ function hydrateFinalFour(
   teamLookup: Map<string, team>
 ): { games: Game[]; champion: team | null } {
   const config = CURRENT_TOURNAMENT_CONFIG
-  const regionKeys = config.regions.map(r => r.toLowerCase())
+  const pairings = config.finalFourPairings // [['south','west'], ['east','midwest']]
 
-  const winner1 = regionWinners[regionKeys[0]]
-  const winner2 = regionWinners[regionKeys[1]]
-  const winner3 = regionWinners[regionKeys[2]]
-  const winner4 = regionWinners[regionKeys[3]]
+  const regionDisplay = (key: string) =>
+    config.regions.find(r => r.toLowerCase() === key) ?? key
+
+  const winner1 = regionWinners[pairings[0][0]]
+  const winner2 = regionWinners[pairings[0][1]]
+  const winner3 = regionWinners[pairings[1][0]]
+  const winner4 = regionWinners[pairings[1][1]]
 
   const semifinal1: Game = {
     id: 'semifinal-1',
-    team1: winner1 ? { ...winner1, region: config.regions[0] } : undefined,
-    team2: winner2 ? { ...winner2, region: config.regions[1] } : undefined,
+    team1: winner1 ? { ...winner1, region: regionDisplay(pairings[0][0]) } : undefined,
+    team2: winner2 ? { ...winner2, region: regionDisplay(pairings[0][1]) } : undefined,
     winner: undefined,
     round: 1,
     position: 0,
@@ -104,8 +107,8 @@ function hydrateFinalFour(
 
   const semifinal2: Game = {
     id: 'semifinal-2',
-    team1: winner3 ? { ...winner3, region: config.regions[2] } : undefined,
-    team2: winner4 ? { ...winner4, region: config.regions[3] } : undefined,
+    team1: winner3 ? { ...winner3, region: regionDisplay(pairings[1][0]) } : undefined,
+    team2: winner4 ? { ...winner4, region: regionDisplay(pairings[1][1]) } : undefined,
     winner: undefined,
     round: 1,
     position: 1,
@@ -123,7 +126,6 @@ function hydrateFinalFour(
   let games = [semifinal1, semifinal2, championship]
   let champion: team | null = null
 
-  // Apply final round picks
   const sorted = [...picks].sort((a, b) => a.round - b.round)
 
   for (const pick of sorted) {
@@ -136,7 +138,6 @@ function hydrateFinalFour(
     const game = games[gameIdx]
     games[gameIdx] = { ...game, winner }
 
-    // Advance semifinal winner to championship
     if (game.round === 1) {
       const champIdx = games.findIndex(g => g.id === 'championship')
       if (champIdx !== -1) {
@@ -148,7 +149,6 @@ function hydrateFinalFour(
       }
     }
 
-    // Championship winner
     if (game.round === 2) {
       champion = winner
     }
@@ -433,13 +433,17 @@ const useBracketHook = (
     })
   }
 
-  const ensureFinalFourInitialized = () => {
+const ensureFinalFourInitialized = () => {
     const config = CURRENT_TOURNAMENT_CONFIG
-    const regionKeys = config.regions.map(r => r.toLowerCase())
-    const winner1 = regionWinners[regionKeys[0]]
-    const winner2 = regionWinners[regionKeys[1]]
-    const winner3 = regionWinners[regionKeys[2]]
-    const winner4 = regionWinners[regionKeys[3]]
+    const pairings = config.finalFourPairings // [['south','west'], ['east','midwest']]
+
+    const regionDisplay = (key: string) =>
+      config.regions.find(r => r.toLowerCase() === key) ?? key
+
+    const winner1 = regionWinners[pairings[0][0]]
+    const winner2 = regionWinners[pairings[0][1]]
+    const winner3 = regionWinners[pairings[1][0]]
+    const winner4 = regionWinners[pairings[1][1]]
 
     if (finalFourGames.length > 0) {
       const semifinal1 = finalFourGames.find(g => g.id === 'semifinal-1')
@@ -449,25 +453,26 @@ const useBracketHook = (
         semifinal1?.team2?.id !== winner2?.id ||
         semifinal2?.team1?.id !== winner3?.id ||
         semifinal2?.team2?.id !== winner4?.id
+
       if (needsUpdate) {
         setFinalFourGames(prevGames => prevGames.map(game => {
           if (game.id === 'semifinal-1') {
             return {
               ...game,
-              team1: winner1 ? { ...winner1, region: config.regions[0] } : undefined,
-              team2: winner2 ? { ...winner2, region: config.regions[1] } : undefined,
+              team1: winner1 ? { ...winner1, region: regionDisplay(pairings[0][0]) } : undefined,
+              team2: winner2 ? { ...winner2, region: regionDisplay(pairings[0][1]) } : undefined,
               winner: (game.team1?.id !== winner1?.id || game.team2?.id !== winner2?.id) ? undefined : game.winner,
             }
           }
           if (game.id === 'semifinal-2') {
             return {
               ...game,
-              team1: winner3 ? { ...winner3, region: config.regions[2] } : undefined,
-              team2: winner4 ? { ...winner4, region: config.regions[3] } : undefined,
+              team1: winner3 ? { ...winner3, region: regionDisplay(pairings[1][0]) } : undefined,
+              team2: winner4 ? { ...winner4, region: regionDisplay(pairings[1][1]) } : undefined,
               winner: (game.team1?.id !== winner3?.id || game.team2?.id !== winner4?.id) ? undefined : game.winner,
             }
           }
-          if (game.id === 'championship' && needsUpdate) {
+          if (game.id === 'championship') {
             return { ...game, team1: undefined, team2: undefined, winner: undefined }
           }
           return game
@@ -479,16 +484,16 @@ const useBracketHook = (
 
     const semifinal1: Game = {
       id: 'semifinal-1',
-      team1: winner1 ? { ...winner1, region: config.regions[0] } : undefined,
-      team2: winner2 ? { ...winner2, region: config.regions[1] } : undefined,
+      team1: winner1 ? { ...winner1, region: regionDisplay(pairings[0][0]) } : undefined,
+      team2: winner2 ? { ...winner2, region: regionDisplay(pairings[0][1]) } : undefined,
       winner: undefined,
       round: 1,
       position: 0,
     }
     const semifinal2: Game = {
       id: 'semifinal-2',
-      team1: winner3 ? { ...winner3, region: config.regions[2] } : undefined,
-      team2: winner4 ? { ...winner4, region: config.regions[3] } : undefined,
+      team1: winner3 ? { ...winner3, region: regionDisplay(pairings[1][0]) } : undefined,
+      team2: winner4 ? { ...winner4, region: regionDisplay(pairings[1][1]) } : undefined,
       winner: undefined,
       round: 1,
       position: 1,
