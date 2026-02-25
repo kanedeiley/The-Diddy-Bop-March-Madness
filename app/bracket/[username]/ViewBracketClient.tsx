@@ -4,11 +4,11 @@ import { BracketProvider } from '@/app/features/bracket/context/BracketProvider'
 import { ViewableBracket } from '@/app/features/bracket/actions/view-bracket';
 import { SavedBracket } from '@/app/features/bracket/hooks/useBracketHook';
 import Bracket from '@/app/features/bracket/components/Bracket';
-import RegionSelectorDropdown from '@/app/features/bracket/region/components/RegionSelectorDropdown';
 type Props = {
   bracket: ViewableBracket;
   teamsByRegion: Record<string, any[]>;
 };
+import RegionSelector from '@/app/features/bracket/region/components/RegionSelector';
 
 export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
   const [scale, setScale] = useState(0.5);
@@ -113,7 +113,7 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
     <BracketProvider teamsByRegion={teamsByRegion} savedBracket={savedBracket}>
       <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
         {/* Header bar */}
-        <div className="bg-white border-b border-gray-200 px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between z-10">
+        <div className="bg-white border-b border-gray-200 px-3 pt-4 sm:px-6 pb-2 sm:pb-2.5 flex items-center justify-between z-10">
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     {bracket.avatar_url ? (
                     <img
@@ -129,10 +129,6 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
                     <h1 className="text-sm sm:text-base font-semibold text-gray-900 truncate">
                     {bracket.username}&apos;s Bracket
                     </h1>
-                </div>
-
-                <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
-                    <RegionSelectorDropdown />
                 </div>
                 </div>
 
@@ -160,6 +156,7 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
           </div>
         </div>
       </div>
+      <RegionSelector />
     </BracketProvider>
   );
 }

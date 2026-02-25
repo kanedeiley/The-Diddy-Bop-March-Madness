@@ -54,7 +54,7 @@ export default function Leaderboard() {
   return (
     <div className="bg-white overflow-hidden">
       {/* Header */}
-      <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50">
+      <div className="px-4 sm:px-6 pt-6 pb-3 sm:pb-4 border-b border-gray-100 bg-gray-50">
         <h2 className="text-base sm:text-lg font-bold text-gray-900">Leaderboard</h2>
         <p className="text-xs text-gray-500 mt-0.5">
           {entries.length} bracket{entries.length !== 1 ? 's' : ''}

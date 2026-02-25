@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import ProfilePhoto from '../../profile/components/ProfilePhoto'
-import SignOut from '@/app/components/auth/sign-out'
+import SignOut from '@/app/features/auth/components/sign-out'
 import Dropdown from './Dropdown'
 
 interface ProfileHoverProps {

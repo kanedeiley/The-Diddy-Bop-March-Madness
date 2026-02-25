@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useBracketContext } from '../../context/useBracketContext';
 
 export default function NationalChampion() {
@@ -17,6 +18,7 @@ export default function NationalChampion() {
           <span className="text-xs font-semibold text-yellow-700">
             {nationalChampion.seed}
           </span>
+          <Image width={20} height={20} alt=" " src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${nationalChampion.espnId}.png`} />
           <span className="text-sm font-bold text-gray-900">
             {nationalChampion.name}
           </span>
