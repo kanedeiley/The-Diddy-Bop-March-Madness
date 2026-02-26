@@ -1,114 +1,66 @@
-"use client";
-import { Losers as podiumWinners } from '.';
+import { createClient } from "@supabase/supabase-js"
 
-// type Loser = {
-//     name: string;
-//     place: number;
-//     wins: number;
-//     pickedChampion: string;
-//     imageUrl: string;
-// };
+interface Player {
+    id: string
+    username: string
+    wins: number
+    avatar_url?: string
+    pickedChampion?: string
+}
+export default async function PodiumLosers() {
+    const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
 
-// const podiumWinners: Loser[] = [
-//     {
-//         place: 4,
-//         name: "Steve",
-//         wins: 1,
-//         pickedChampion: "Houston",
-//         imageUrl: "/images/tarm.jpg",
-//     },
-//     {
-//         place: 5,
-//         name: "Robert",
-//         wins: 3,
-//         pickedChampion: "UConn",
-//         imageUrl: "/images/tarm.jpg",
-//     },
-//     {
-//         place: 6,
-//         name: "Mathew",
-//         wins: 1,
-//         pickedChampion: "Purdue",
-//         imageUrl: "/images/tarm.jpg",
-//     },
-//     {
-//         place: 7,
-//         name: "Steve",
-//         wins: 1,
-//         pickedChampion: "Houston",
-//         imageUrl: "/images/tarm.jpg",
-//     },
-//     {
-//         place: 8,
-//         name: "Robert",
-//         wins: 3,
-//         pickedChampion: "UConn",
-//         imageUrl: "/images/tarm.jpg",
-//     },
-//     {
-//         place: 9,
-//         name: "Mathew",
-//         wins: 1,
-//         pickedChampion: "Purdue",
-//         imageUrl: "/images/tarm.jpg",
-//     },
+    const { data, error } = await supabase
+        .from<"profile", Player>("profile")
+        .select("*")
+        .order("wins", { ascending: false })
+        .range(3, 20)
 
-// ];
+    if (error) {
+        console.error("Supabase fetch error:", error)
+        return (
+            <div className="p-4 text-center">
+                <h2 className="mb-6 text-xl md:text-2xl font-semibold">Winners</h2>
+                <p>Error loading players: {error.message}</p>
+            </div>
+        )
+    }
 
-export default function PodiumLosers() {
+    const podiumWinners = data ?? []
+
+
+    const ordered = podiumWinners.sort((a, b) => a.place - b.place)
+
     return (
-        <h1>Podium Losers</h1>
-        // Ensure they’re ordered 4,5,6 visually
-        // const ordered = podiumWinners.sort((a, b) => a.place - b.place);
+        <div className="p-4 text-center">
+            <div className="flex justify-center items-end gap-6 max-w-4xl mx-auto flex-wrap">
+                {ordered.map((loser) => (
+                    <div
+                        key={loser.id}
+                        className="bg-gray-100 rounded-xl p-4 w-[150px] shadow-md border border-gray-200"
+                    >
+                        <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gray-300">
+                            <img
+                                src={loser.avatar_url ?? "/placeholder.png"}
+                                alt={loser.username}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
 
-        // return (
-        //     <div
-        //         style={{
-        //             padding: "1rem",
-        //             textAlign: "center",
-        //         }}
-        //     >
+                        <h3 className="font-semibold text-sm md:text-base mb-1">
+                            {loser.username}
+                        </h3>
 
-        //         <div
-        //             style={{
-        //                 display: "flex",
-        //                 justifyContent: "center",
-        //                 alignItems: "flex-end",
-        //                 gap: "1.5rem",
-        //                 maxWidth: "800px",
-        //                 margin: "0 auto",
-        //             }}
-        //         >
-        //             {ordered.map((loser) => (
-        //                 <div
-        //                     key={loser.place}
-        //                     style={{
-        //                         border: "2px solid #ccc",
-        //                         borderRadius: "8px",
-        //                         padding: "1rem",
-        //                         width: "150px",
-        //                         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        //                     }}
-        //                 >
-        //                     <img
-        //                         src={loser.imageUrl}
-        //                         alt={loser.name}
-        //                         style={{
-        //                             width: "100%",
-        //                             borderRadius: "50%",
-        //                             marginBottom: "0.5rem",
-        //                         }}
-        //                     />
-        //                     <h3 style={{ margin: "0.5rem 0" }}>{loser.name}</h3>
-        //                     <p style={{ margin: "0.25rem 0" }}>
-        //                         Wins: {loser.wins}
-        //                     </p>
-        //                     <p style={{ margin: "0.25rem 0" }}>
-        //                         Picked Champion: {loser.pickedChampion}
-        //                     </p>
-        //                 </div>
-        //             ))}
-        //         </div>
-        //     </div>
-    );
+                        <p className="text-xs md:text-sm text-gray-600">
+                            Wins: <strong>{loser.wins}</strong>
+                        </p>
+
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 }

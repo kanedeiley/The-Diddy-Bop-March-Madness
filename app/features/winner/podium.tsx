@@ -5,7 +5,7 @@ interface Player {
     id: string
     username: string
     wins: number
-    imageUrl?: string
+    avatar_url?: string
     pickedChampion?: string
 }
 
@@ -69,7 +69,7 @@ export default async function PodiumWinners() {
                   `}
                                 >
                                     <img
-                                        src={w.imageUrl ?? "/placeholder.png"}
+                                        src={w.avatar_url ?? "/placeholder.png"}
                                         alt={w.username}
                                         className="w-full h-full object-cover"
                                     />
@@ -78,9 +78,6 @@ export default async function PodiumWinners() {
                                 <div className="text-xs md:text-sm text-gray-600">Place: {place}</div>
                                 <div className="text-xs md:text-sm mt-1">
                                     Wins: <strong>{w.wins}</strong>
-                                </div>
-                                <div className="text-xs md:text-sm mt-1 truncate">
-                                    Picked: <strong>{w.pickedChampion ?? "N/A"}</strong>
                                 </div>
                             </div>
 
