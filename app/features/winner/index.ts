@@ -20,7 +20,7 @@ export const podiumWinners: PodiumWinner[] = [
     {
         place: 2,
         name: "Pop-Pop",
-        wins: 0,
+        wins: 43,
         pickedChampion: "Houston",
         imageUrl: "/images/pop-pop.png",
     },
