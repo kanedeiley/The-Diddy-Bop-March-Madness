@@ -75,7 +75,6 @@ export async function getScoreboard(
 ): Promise<ESPNGameResult[]> {
   const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
-<<<<<<< HEAD
   // No date range provided — just fetch today
   if (!startDate || !endDate) {
     const res = await fetch(`${ESPN_BASE}/scoreboard?dates=${today}&groups=100`, {
@@ -93,14 +92,6 @@ export async function getScoreboard(
   const effectiveEnd = today < endDate ? today : endDate;
   const dates = getDateRange(startDate, effectiveEnd);
 
-=======
-  const dates =
-    startDate && endDate
-      ? getDateRange(startDate, endDate)
-      : [today];
-
-  // Fetch all days in parallel
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
   const responses = await Promise.all(
     dates.map((date) =>
       fetch(`${ESPN_BASE}/scoreboard?dates=${date}&groups=100`, {
@@ -110,10 +101,6 @@ export async function getScoreboard(
   );
 
   const allEvents: any[] = [];
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
   for (const data of responses) {
     if (data?.events) {
       allEvents.push(...data.events);
@@ -124,7 +111,6 @@ export async function getScoreboard(
   const uniqueEvents = Array.from(
     new Map(allEvents.map((e) => [e.id, e])).values()
   );
-<<<<<<< HEAD
   
   return uniqueEvents.map(mapEvent);
 }
@@ -143,24 +129,6 @@ function mapEvent(event: any): ESPNGameResult {
       name: c.team.displayName,
     })),
   };
-=======
-
-  return uniqueEvents.map((event: any) => {
-    const comp = event.competitions[0];
-
-    return {
-      gameId: event.id,
-      date: event.date,
-      completed: comp.status.type.completed,
-      teams: comp.competitors.map((c: any) => ({
-        espnId: c.team.id,
-        score: c.score,
-        winner: c.winner,
-        name: c.team.displayName
-      })),
-    };
-  });
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
 }
 
 /**

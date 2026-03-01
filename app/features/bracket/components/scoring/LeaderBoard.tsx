@@ -4,10 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { getLeaderboard, LeaderboardEntry } from '../../actions/leaderboard';
 import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
-<<<<<<< HEAD
 import Image from 'next/image';
-=======
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
 
 export default function Leaderboard() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
@@ -27,11 +24,7 @@ export default function Leaderboard() {
 
   if (isPending) {
     return (
-<<<<<<< HEAD
       <div className="bg-white p-8">
-=======
-      <div className="bg-white rounded-xl border border-gray-200 p-8">
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-200 rounded w-40" />
           {[...Array(5)].map((_, i) => (
@@ -44,11 +37,7 @@ export default function Leaderboard() {
 
   if (error) {
     return (
-<<<<<<< HEAD
       <div className="bg-white p-6 text-red-600">
-=======
-      <div className="bg-white rounded-xl border border-red-200 p-6 text-red-600">
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
         {error}
       </div>
     );
@@ -56,28 +45,17 @@ export default function Leaderboard() {
 
   if (entries.length === 0) {
     return (
-<<<<<<< HEAD
       <div className="bg-white p-8 text-center text-gray-500">
-=======
-      <div className="bg-white rounded-xl border border-gray-200 p-8 text-center text-gray-500">
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
         No locked brackets yet. Leaderboard will populate once brackets are locked.
       </div>
     );
   }
 
   return (
-<<<<<<< HEAD
     <div className="bg-white overflow-hidden">
       {/* Header */}
       <div className="px-4 sm:px-6 pt-6 pb-3 sm:pb-4 border-b border-gray-100 bg-gray-50">
         <h2 className="text-base sm:text-lg font-bold text-gray-900">Leaderboard</h2>
-=======
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-100 bg-gray-50">
-        <h2 className="text-lg font-bold text-gray-900">Leaderboard</h2>
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
         <p className="text-xs text-gray-500 mt-0.5">
           {entries.length} bracket{entries.length !== 1 ? 's' : ''}
         </p>
@@ -85,7 +63,6 @@ export default function Leaderboard() {
 
       {/* Table */}
       <div className="divide-y divide-gray-100">
-<<<<<<< HEAD
         {entries.map((entry) => (
           <Link
             key={entry.username}
@@ -164,50 +141,6 @@ export default function Leaderboard() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 pl-9 sm:pl-12">
               {/* Stats - Mobile Only */}
               <div className="flex sm:hidden items-center gap-3 text-xs">
-=======
-        {entries.map((entry, index) => (
-          <Link
-            key={entry.username}
-            href={`/bracket/${entry.username}`}
-            className="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors"
-          >
-            {/* Rank */}
-            <div className="w-8 text-center">
-              {entry.rank <= 3 ? (
-                <span className="text-lg">
-                  {entry.rank === 1 && '🥇'}
-                  {entry.rank === 2 && '🥈'}
-                  {entry.rank === 3 && '🥉'}
-                </span>
-              ) : (
-                <span className="text-sm font-semibold text-gray-400">
-                  {entry.rank}
-                </span>
-              )}
-            </div>
-
-            {/* Avatar + Name */}
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              {entry.avatar_url ? (
-                <img
-                  src={entry.avatar_url}
-                  alt={entry.username}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">
-                  {entry.username.charAt(0).toUpperCase()}
-                </div>
-              )}
-              <span className="font-medium text-gray-900 truncate">
-                {entry.username}
-              </span>
-            </div>
-
-            {/* Stats */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-xs">
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
                 <span className="flex items-center gap-1 text-green-600">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                   {entry.correct}
@@ -222,7 +155,6 @@ export default function Leaderboard() {
                 </span>
               </div>
 
-<<<<<<< HEAD
               {/* Cinderella Picks */}
               {entry.cinderella_ids.size > 0 && (
                 <div className="flex flex-col gap-1">
@@ -256,15 +188,6 @@ export default function Leaderboard() {
                   </div>
                 </div>
               )}
-=======
-              {/* Points */}
-              <div className="w-16 text-right">
-                <span className="text-lg font-bold text-gray-900">
-                  {entry.total_points}
-                </span>
-                <span className="text-xs text-gray-400 ml-0.5">pts</span>
-              </div>
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
             </div>
           </Link>
         ))}

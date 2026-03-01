@@ -4,10 +4,7 @@ import { Cancel, Check, Flag } from "@/app/components/icons/EditIcons"
 import { useState } from "react"
 import { useBracketSave } from "../hooks/useBracketSave"
 import { CURRENT_TOURNAMENT_CONFIG } from "@/app/config"
-<<<<<<< HEAD
 import RegionSelector from "../region/components/RegionSelector"
-=======
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
 
 
 const {year} = CURRENT_TOURNAMENT_CONFIG
@@ -19,35 +16,7 @@ export default function BracketMenu() {
 
   return (
     <>
-<<<<<<< HEAD
 <RegionSelector />
-=======
-    <nav
-      aria-label="Bracket regions"
-      className="fixed bottom-6 right-6 z-50"
-    >
-      <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm px-2 py-2 flex gap-2">
-        {regions.map((region) => {
-          const active = region === selectedRegion
-          return (
-            <button
-              key={region}
-              type="button"
-              onClick={() => setSelectedRegion(region)}
-              aria-pressed={active}
-              className={`capitalize text-[10px] py-1 px-2 rounded transition-all ${
-                active
-                  ? "bg-blue-500/90 text-white"
-                  : "text-gray-600 hover:bg-gray-100/50"
-              }`}
-            >
-              {region}
-            </button>
-          )
-        })}
-      </div>
-    </nav>
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
  {(Date.now() > CURRENT_TOURNAMENT_CONFIG.lockedTime.getTime()) ? (
   null
  ) : (

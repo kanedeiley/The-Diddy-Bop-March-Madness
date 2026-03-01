@@ -113,7 +113,6 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
     <BracketProvider teamsByRegion={teamsByRegion} savedBracket={savedBracket}>
       <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
         {/* Header bar */}
-<<<<<<< HEAD
         <div className="bg-white border-b border-gray-200 px-3 pt-4 sm:px-6 pb-2 sm:pb-2.5 flex items-center justify-between z-10">
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     {bracket.avatar_url ? (
@@ -132,36 +131,6 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
                     </h1>
                 </div>
                 </div>
-=======
-        <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between z-10">
-          <div className="flex items-center gap-3">
-            {bracket.avatar_url ? (
-              <img
-                src={bracket.avatar_url}
-                alt={bracket.username}
-                className="w-8 h-8 rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">
-                {bracket.username.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <h1 className="text-lg font-bold text-gray-900">
-              {bracket.username}&apos;s Bracket
-            </h1>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <RegionSelector />
-            <Link
-              href="/bracket"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              ← Your bracket
-            </Link>
-          </div>
-        </div>
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
 
         {/* Scrollable canvas — bracket is read-only */}
         <div
@@ -187,10 +156,7 @@ export default function ViewBracketClient({ bracket, teamsByRegion }: Props) {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <RegionSelector />
-=======
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
     </BracketProvider>
   );
 }

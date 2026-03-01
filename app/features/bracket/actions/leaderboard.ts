@@ -17,11 +17,8 @@ export interface LeaderboardEntry {
   pending: number;
   max_possible: number;
   rank: number;
-<<<<<<< HEAD
   cinderella_ids: Set<string>
   champion_id: string | null;
-=======
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
 }
 
 export type LeaderboardResponse =
@@ -124,7 +121,6 @@ export async function getLeaderboard(
     picksByBracket.get(pick.bracket_id)!.push(pick);
   }
 
-<<<<<<< HEAD
 
     // 9. Index championship picks by bracket_id
     const championByBracket = new Map<string, string>();
@@ -134,8 +130,6 @@ export async function getLeaderboard(
     }
     }
 
-=======
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
   const cinderellasByBracket = new Map<string, Set<string>>();
   for (const c of cinderellasResult.data ?? []) {
     if (!cinderellasByBracket.has(c.bracket_id)) {
@@ -171,11 +165,8 @@ export async function getLeaderboard(
       pending: score.pending,
       max_possible: score.max_possible,
       rank: 0,
-<<<<<<< HEAD
       cinderella_ids: cinderellaIds,
       champion_id: championByBracket.get(bracket.id) ?? null,
-=======
->>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
     });
   }
 
