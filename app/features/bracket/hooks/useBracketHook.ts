@@ -420,6 +420,20 @@ const useBracketHook = (
     setNationalChampion(null)
   }
 
+  const resetToSavedBracket = () => {
+    if (!savedBracket) {
+      resetAllBrackets()
+      return
+    }
+
+    const initial = buildInitialState()
+    setRegionalGames(initial.regionalGames)
+    setRegionWinners(initial.regionWinners)
+    setFinalFourGames(initial.finalFourGames)
+    setNationalChampion(initial.nationalChampion)
+    setSelectedCinderellas(initial.cinderellas)
+  }
+
   const setCinderellaForRegion = (region: string, item: cinderella | null) => {
     setSelectedCinderellas(prev => ({ ...prev, [region]: item }))
   }
@@ -554,6 +568,7 @@ const ensureFinalFourInitialized = () => {
     currentRegionWinner,
     resetRegion,
     resetAllBrackets,
+    resetToSavedBracket,
     finalFourGames,
     nationalChampion,
     ensureFinalFourInitialized,
