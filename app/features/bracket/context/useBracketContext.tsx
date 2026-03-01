@@ -43,8 +43,11 @@ export type BracketContextType = {
   selectFinalFourWinner: (gameId: string, winner: team) => void;
   areAllRegionsComplete: () => boolean;
   getRegionWinner: (regionKey: string) => team | null;
+<<<<<<< HEAD
 
   // Ability to view others brackets via ID
+=======
+>>>>>>> 6ef757a78e935f8bc29c0901d178b23a10954e59
   bracketId: string | null
 };
 
