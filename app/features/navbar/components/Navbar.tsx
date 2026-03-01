@@ -16,7 +16,7 @@ export default function Navbar({ profile }: NavbarProps) {
   if (path === "/login" || path === "/profile/create") return null
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex w-full border-b border-gray-700/20 items-center justify-between py-4 px-8 bg-white">
+  <nav className="fixed top-0 left-0 right-0 z-50 flex w-full border-b border-gray-700/20 items-center justify-between h-16 px-8 bg-white">
       <div className="flex items-center gap-8">
         <Link href={'/'}>
           <Logo className="h-6 stroke-black fill-black text-gray-700" />

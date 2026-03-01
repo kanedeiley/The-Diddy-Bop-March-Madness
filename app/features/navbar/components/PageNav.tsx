@@ -37,7 +37,7 @@ export default function PageNav() {
         <Dropdown
           trigger={
             <button
-              className="text-gray-600 hover:text-gray-900 transition-colors p-2 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded"
+              className="text-gray-600 hover:text-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-200 rounded"
               aria-label="Navigation menu"
             >
               <svg

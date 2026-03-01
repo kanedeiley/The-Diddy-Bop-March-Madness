@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { getLeaderboard, LeaderboardEntry } from '../../actions/leaderboard';
 import { CURRENT_TOURNAMENT_CONFIG } from '@/app/config';
+import Image from 'next/image';
 
 export default function Leaderboard() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
@@ -23,7 +24,7 @@ export default function Leaderboard() {
 
   if (isPending) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-8">
+      <div className="bg-white p-8">
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-gray-200 rounded w-40" />
           {[...Array(5)].map((_, i) => (
@@ -36,7 +37,7 @@ export default function Leaderboard() {
 
   if (error) {
     return (
-      <div className="bg-white rounded-xl border border-red-200 p-6 text-red-600">
+      <div className="bg-white p-6 text-red-600">
         {error}
       </div>
     );
@@ -44,17 +45,17 @@ export default function Leaderboard() {
 
   if (entries.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 p-8 text-center text-gray-500">
+      <div className="bg-white p-8 text-center text-gray-500">
         No locked brackets yet. Leaderboard will populate once brackets are locked.
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <div className="bg-white overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-100 bg-gray-50">
-        <h2 className="text-lg font-bold text-gray-900">Leaderboard</h2>
+      <div className="px-4 sm:px-6 pt-6 pb-3 sm:pb-4 border-b border-gray-100 bg-gray-50">
+        <h2 className="text-base sm:text-lg font-bold text-gray-900">Leaderboard</h2>
         <p className="text-xs text-gray-500 mt-0.5">
           {entries.length} bracket{entries.length !== 1 ? 's' : ''}
         </p>
@@ -62,48 +63,83 @@ export default function Leaderboard() {
 
       {/* Table */}
       <div className="divide-y divide-gray-100">
-        {entries.map((entry, index) => (
+        {entries.map((entry) => (
           <Link
             key={entry.username}
             href={`/bracket/${entry.username}`}
-            className="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors"
+            className="flex flex-col gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 transition-colors border-b-2 border-gray-100"
           >
-            {/* Rank */}
-            <div className="w-8 text-center">
-              {entry.rank <= 3 ? (
-                <span className="text-lg">
-                  {entry.rank === 1 && '🥇'}
-                  {entry.rank === 2 && '🥈'}
-                  {entry.rank === 3 && '🥉'}
-                </span>
-              ) : (
-                <span className="text-sm font-semibold text-gray-400">
-                  {entry.rank}
-                </span>
-              )}
-            </div>
+            {/* Top Row: Rank, Avatar, Name, Stats */}
+            <div className="flex items-center gap-3 sm:gap-4">
+              {/* Rank */}
+              <div className="w-6 sm:w-8 text-center flex-shrink-0">
+                {entry.rank <= 3 ? (
+                  <span className={`text-sm sm:text-base font-bold ${entry.rank === 1 ? 'text-amber-500' : entry.rank === 2 ? 'text-gray-500' : 'text-orange-600'}`}>
+                    {entry.rank}
+                  </span>
+                ) : (
+                  <span className="text-xs sm:text-sm font-semibold text-gray-400">
+                    {entry.rank}
+                  </span>
+                )}
+              </div>
 
-            {/* Avatar + Name */}
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              {entry.avatar_url ? (
-                <img
-                  src={entry.avatar_url}
-                  alt={entry.username}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">
-                  {entry.username.charAt(0).toUpperCase()}
+              {/* Avatar + Name */}
+              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                {entry.avatar_url ? (
+                  <img
+                    src={entry.avatar_url}
+                    alt={entry.username}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
+                  />
+                ) : (
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500 flex-shrink-0">
+                    {entry.username.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <span className="text-sm sm:text-base font-medium text-gray-900 truncate">
+                  {entry.username}
+                </span>
+              </div>
+
+              {/* Stats - Desktop */}
+              <div className="hidden sm:flex items-center gap-4 flex-shrink-0">
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="flex items-center gap-1 text-green-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                    {entry.correct}
+                  </span>
+                  <span className="flex items-center gap-1 text-red-500">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                    {entry.wrong}
+                  </span>
+                  <span className="flex items-center gap-1 text-gray-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                    {entry.pending}
+                  </span>
                 </div>
-              )}
-              <span className="font-medium text-gray-900 truncate">
-                {entry.username}
-              </span>
-            </div>
 
-            {/* Stats */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-xs">
+                {/* Points */}
+                <div className="w-16 text-right">
+                  <span className="text-lg font-bold text-gray-900">
+                    {entry.total_points}
+                  </span>
+                  <span className="text-xs text-gray-400 ml-0.5">pts</span>
+                </div>
+              </div>
+
+              {/* Points - Mobile Only */}
+              <div className="sm:hidden flex-shrink-0">
+                <span className="text-base font-bold text-gray-900">
+                  {entry.total_points}
+                </span>
+                <span className="text-xs text-gray-400 ml-0.5">pts</span>
+              </div>
+            </div>
+            {/* Bottom Row: Stats (Mobile) + Cinderella + Champion */}
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6 pl-9 sm:pl-0">
+              {/* Stats - Mobile Only */}
+              <div className="flex sm:hidden items-center gap-3 text-xs">
                 <span className="flex items-center gap-1 text-green-600">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                   {entry.correct}
@@ -118,13 +154,39 @@ export default function Leaderboard() {
                 </span>
               </div>
 
-              {/* Points */}
-              <div className="w-16 text-right">
-                <span className="text-lg font-bold text-gray-900">
-                  {entry.total_points}
-                </span>
-                <span className="text-xs text-gray-400 ml-0.5">pts</span>
-              </div>
+              {/* Cinderella Picks */}
+              {entry.cinderella_ids.size > 0 && (
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-semibold text-pink-700 uppercase">Cinderella</span>
+                  <div className="flex gap-2 flex-wrap">
+                    {Array.from(entry.cinderella_ids).map((espnId) => (
+                      <div key={espnId} className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex-shrink-0" style={{ borderWidth: '2px', borderColor: 'var(--cinderella-border)' }}>
+                        <Image
+                          src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${espnId}.png`}
+                          alt={`Team ${espnId}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Champion Pick */}
+              {entry.champion_id && (
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-semibold text-amber-700 uppercase">Champion</span>
+                  <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex-shrink-0" style={{ borderWidth: '2px', borderColor: 'var(--champion-border)' }}>
+                    <Image
+                      src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${entry.champion_id}.png`}
+                      alt="Champion pick"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </Link>
         ))}

@@ -13,8 +13,8 @@ export const CURRENT_TOURNAMENT_CONFIG = {
   regions: ['South', 'East', 'West', 'Midwest'],
   startDate: '20250318',  
   endDate: '20250407',   
-  lockedTime: new Date('2025-05-01T10:20:30Z'),
-  finalFourLocation: 'San Antonio, TX',
+  lockedTime: new Date('2026-05-01T10:20:30Z'),
+  finalFourLocation: 'Indianapolis, Indiana',
   finalFourPairings: [
     ['south', 'west'],   
     ['east', 'midwest'], 

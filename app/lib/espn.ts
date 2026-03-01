@@ -75,12 +75,23 @@ export async function getScoreboard(
 ): Promise<ESPNGameResult[]> {
   const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
-  const dates =
-    startDate && endDate
-      ? getDateRange(startDate, endDate)
-      : [today];
+  // No date range provided — just fetch today
+  if (!startDate || !endDate) {
+    const res = await fetch(`${ESPN_BASE}/scoreboard?dates=${today}&groups=100`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.events ?? []).map(mapEvent);
+  }
 
-  // Fetch all days in parallel
+  // Tournament hasn't started yet — nothing to fetch
+  if (today < startDate) return [];
+
+  // Cap end date to today — don't fetch future dates
+  const effectiveEnd = today < endDate ? today : endDate;
+  const dates = getDateRange(startDate, effectiveEnd);
+
   const responses = await Promise.all(
     dates.map((date) =>
       fetch(`${ESPN_BASE}/scoreboard?dates=${date}&groups=100`, {
@@ -90,7 +101,6 @@ export async function getScoreboard(
   );
 
   const allEvents: any[] = [];
-
   for (const data of responses) {
     if (data?.events) {
       allEvents.push(...data.events);
@@ -101,22 +111,24 @@ export async function getScoreboard(
   const uniqueEvents = Array.from(
     new Map(allEvents.map((e) => [e.id, e])).values()
   );
+  
+  return uniqueEvents.map(mapEvent);
+}
 
-  return uniqueEvents.map((event: any) => {
-    const comp = event.competitions[0];
-
-    return {
-      gameId: event.id,
-      date: event.date,
-      completed: comp.status.type.completed,
-      teams: comp.competitors.map((c: any) => ({
-        espnId: c.team.id,
-        score: c.score,
-        winner: c.winner,
-        name: c.team.displayName
-      })),
-    };
-  });
+/** Shared event → result mapper */
+function mapEvent(event: any): ESPNGameResult {
+  const comp = event.competitions[0];
+  return {
+    gameId: event.id,
+    date: event.date,
+    completed: comp.status.type.completed,
+    teams: comp.competitors.map((c: any) => ({
+      espnId: c.team.id,
+      score: c.score,
+      winner: c.winner,
+      name: c.team.displayName,
+    })),
+  };
 }
 
 /**
