@@ -136,9 +136,8 @@ export default function Leaderboard() {
                 <span className="text-xs text-gray-400 ml-0.5">pts</span>
               </div>
             </div>
-
             {/* Bottom Row: Stats (Mobile) + Cinderella + Champion */}
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 pl-9 sm:pl-12">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6 pl-9 sm:pl-0">
               {/* Stats - Mobile Only */}
               <div className="flex sm:hidden items-center gap-3 text-xs">
                 <span className="flex items-center gap-1 text-green-600">
@@ -161,7 +160,7 @@ export default function Leaderboard() {
                   <span className="text-xs font-semibold text-pink-700 uppercase">Cinderella</span>
                   <div className="flex gap-2 flex-wrap">
                     {Array.from(entry.cinderella_ids).map((espnId) => (
-                      <div key={espnId} className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg border border-gray-300 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex-shrink-0">
+                      <div key={espnId} className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex-shrink-0" style={{ borderWidth: '2px', borderColor: 'var(--cinderella-border)' }}>
                         <Image
                           src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${espnId}.png`}
                           alt={`Team ${espnId}`}
@@ -178,7 +177,7 @@ export default function Leaderboard() {
               {entry.champion_id && (
                 <div className="flex flex-col gap-1">
                   <span className="text-xs font-semibold text-amber-700 uppercase">Champion</span>
-                  <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg border-2 border-amber-500 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex-shrink-0">
+                  <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex-shrink-0" style={{ borderWidth: '2px', borderColor: 'var(--champion-border)' }}>
                     <Image
                       src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${entry.champion_id}.png`}
                       alt="Champion pick"
