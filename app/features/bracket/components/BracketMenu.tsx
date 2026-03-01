@@ -9,7 +9,7 @@ import RegionSelector from "../region/components/RegionSelector"
 
 const {year} = CURRENT_TOURNAMENT_CONFIG
 export default function BracketMenu() {
-  const { selectedRegion, setSelectedRegion } = useBracketContext()
+  const { selectedRegion, setSelectedRegion, resetToSavedBracket } = useBracketContext()
   const [isHovered, setIsHovered] = useState(false)
   const { save, saving, error } = useBracketSave(year)
 
@@ -58,6 +58,7 @@ export default function BracketMenu() {
             title="Reset Bracket"
               type="button"
               className="capitalize text-xs py-2 px-2 rounded-full transition-all text-red-600 hover:bg-red-100/50 whitespace-nowrap"
+              onClick={resetToSavedBracket}
             >
               <Cancel className="h-4 w-4" />
             </button>

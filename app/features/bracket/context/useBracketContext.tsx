@@ -35,6 +35,7 @@ export type BracketContextType = {
   // Reset functions
   resetRegion: (region: string) => void;
   resetAllBrackets: () => void;
+  resetToSavedBracket: () => void;
 
   // Final Four
   finalFourGames: Game[];
