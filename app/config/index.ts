@@ -8,16 +8,31 @@ export type TournamentConfig = {
   championshipLocation?: string;
 };
 
+// export const CURRENT_TOURNAMENT_CONFIG = {
+//   year: 2025,
+//   regions: ['South', 'East', 'West', 'Midwest'],
+//   startDate: '20250318',  
+//   endDate: '20250407',   
+//   // End of day March 18, 2026 in America/New_York (EDT) -> 2026-03-19T03:59:59.999Z
+//   lockedTime: new Date('2026-03-19T03:59:59.999Z'),
+//   finalFourLocation: 'Indianapolis, Indiana',
+//   finalFourPairings: [
+//     ['south', 'west'],   
+//     ['east', 'midwest'], 
+//   ] as [string, string][],
+// };
+
 export const CURRENT_TOURNAMENT_CONFIG = {
-  year: 2025,
+  year: 2026,
   regions: ['South', 'East', 'West', 'Midwest'],
-  startDate: '20250318',  
-  endDate: '20250407',   
-  lockedTime: new Date('2026-05-01T10:20:30Z'),
+  startDate: '20260319',  
+  endDate: '20260407',   
+  // End of day March 18, 2026 in America/New_York (EDT) -> 2026-03-19T03:59:59.999Z
+  lockedTime: new Date('2026-03-19T03:59:59.999Z'),
   finalFourLocation: 'Indianapolis, Indiana',
   finalFourPairings: [
-    ['south', 'west'],   
-    ['east', 'midwest'], 
+    ['south', 'east'],   
+    ['west', 'midwest'], 
   ] as [string, string][],
 };
 // Helper to validate all regions have winners
