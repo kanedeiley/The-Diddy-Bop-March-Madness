@@ -26,11 +26,8 @@ export async function loadBracketByUsername(
   } = await supabase.auth.getUser();
   if (!user) return { success: false, error: 'Not authenticated' };
 
-  // Time-based lock check
+  // NOTE: removed server-side time-based lock so brackets are viewable at any time
   const config = CURRENT_TOURNAMENT_CONFIG;
-  if (new Date() < config.lockedTime) {
-    return { success: false, error: 'Brackets are not locked yet' };
-  }
 
   // 1. Look up profile by username
   const { data: profile, error: profileError } = await supabase

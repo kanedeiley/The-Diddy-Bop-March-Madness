@@ -35,11 +35,7 @@ export async function getLeaderboard(
   } = await supabase.auth.getUser();
   if (!user) return { success: false, error: 'Not authenticated' };
 
-  // Check if brackets are locked yet
   const config = CURRENT_TOURNAMENT_CONFIG;
-  if (new Date() < config.lockedTime) {
-    return { success: false, error: 'Brackets are not locked yet' };
-  }
 
   // 1. All brackets for this tournament
   const { data: brackets, error: bracketsError } = await supabase
