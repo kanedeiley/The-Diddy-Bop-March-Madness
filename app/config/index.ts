@@ -27,8 +27,8 @@ export const CURRENT_TOURNAMENT_CONFIG = {
   regions: ['South', 'East', 'West', 'Midwest'],
   startDate: '20260319',  
   endDate: '20260407',   
-  // End of day March 18, 2026 in America/New_York (EDT) -> 2026-03-19T03:59:59.999Z
-  lockedTime: new Date('2026-03-19T03:59:59.999Z'),
+  // Noon March 20, 2026 in America/New_York (EDT) -> 2026-03-20T16:00:00.000Z
+  lockedTime: new Date('2026-03-19T16:00:00.000Z'),
   finalFourLocation: 'Indianapolis, Indiana',
   finalFourPairings: [
     ['south', 'east'],   
