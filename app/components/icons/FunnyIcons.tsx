@@ -1,21 +1,4 @@
 import { iconProps } from "./types";
-import Image from 'next/image';
-
-
-// function MiddleFinger(props: iconProps) {
-//   return (
-// <div className={props.className}>
-
-// <Image 
-//   src="/images/H-K-MF Figma.png" 
-//   alt="Description"
-//   width={"400"}
-//     height={"400"}
-// />
-// </div>
-//   )
-// }
-
 
 function MiddleFinger(props: iconProps) {
   return (
