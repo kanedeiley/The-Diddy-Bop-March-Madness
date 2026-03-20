@@ -48,7 +48,7 @@ function TeamCard({ game, teamNumber }: TeamCardProps) {
           <span className="text-xs font-semibold text-gray-500 w-6">
             {currentTeam.seed}
           </span>
-          <Image width={20} height={20} alt=" " src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${currentTeam.espnId}.png`} />
+          <img width={20} height={20} alt=" " src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${currentTeam.espnId}.png`} />
           <span className="text-sm flex-1 truncate">
             {currentTeam.name}
           </span>
